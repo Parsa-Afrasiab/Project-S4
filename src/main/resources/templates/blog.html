@@ -173,35 +173,11 @@
         </h4>
 
 
-        <div class="border rounded p-3 mb-3">
+        <div th:each="comment : ${comments}"
+             class="border rounded p-3 mb-3">
 
-            <h6 class="fw-bold">
-
-                Ali
-
-            </h6>
-
-            <p class="mb-0 text-muted">
-
-                This article was very useful. Thank you!
-
-            </p>
-
-        </div>
-
-
-        <div class="border rounded p-3 mb-3">
-
-            <h6 class="fw-bold">
-
-                Sara
-
-            </h6>
-
-            <p class="mb-0 text-muted">
-
-                I learned a lot about Spring Boot.
-
+            <p class="mb-0"
+               th:text="${comment.message}">
             </p>
 
         </div>
@@ -217,27 +193,25 @@
         </h5>
 
 
-        <form>
-
+        <form th:action="@{/blog/{id}/comment(id=${blog.id})}" method="post">
 
             <div class="mb-3">
 
-                <textarea
-                        class="form-control"
-                        rows="4"
-                        placeholder="Write your comment..."></textarea>
+        <textarea
+                name="message"
+                class="form-control"
+                rows="4"
+                placeholder="Write your comment..."
+                required>
+        </textarea>
 
             </div>
 
-
             <button class="btn btn-primary">
-
-                <i class="bi bi-send"></i>
 
                 Send Comment
 
             </button>
-
 
         </form>
 

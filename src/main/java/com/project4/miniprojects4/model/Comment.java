@@ -15,6 +15,10 @@ public class Comment {
 
     private boolean approved;
 
+    @ManyToOne
+    @JoinColumn(name = "blog_id")
+    private Blog blog;
+
     public Comment() {
     }
 
@@ -46,5 +50,13 @@ public class Comment {
 
     public void setApproved(boolean approved) {
         this.approved = approved;
+    }
+
+    public Blog getBlog() {
+        return blog;
+    }
+
+    public void setBlog(Blog blog) {
+        this.blog = blog;
     }
 }

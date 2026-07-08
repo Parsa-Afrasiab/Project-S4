@@ -19,11 +19,29 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
+    public List<Comment> getApprovedCommentsByBlog(Long blogId) {
+        return commentRepository.findByBlogIdAndApprovedTrue(blogId);
+    }
+
     public List<Comment> getAllComments() {
         return commentRepository.findAll();
     }
 
-    public void delete(Long id) {
+    public Comment getCommentById(Long id) {
+        return commentRepository.findById(id).orElse(null);
+    }
+
+    public void approveComment(Long id) {
+        Comment comment = getCommentById(id);
+
+        if (comment != null) {
+            comment.setApproved(true);
+            commentRepository.save(comment);
+        }
+    }
+
+    public void deleteComment(Long id) {
         commentRepository.deleteById(id);
     }
+
 }
