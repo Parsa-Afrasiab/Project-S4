@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Mini Blog</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+
+        body{
+            background:#f8f9fa;
+        }
+
+        .navbar{
+            box-shadow:0 3px 12px rgba(0,0,0,.08);
+        }
+
+        .hero{
+
+            background:linear-gradient(135deg,#0d6efd,#5fa8ff);
+            color:white;
+            padding:90px 0;
+            border-radius:0 0 35px 35px;
+
+        }
+
+        .hero h1{
+
+            font-weight:bold;
+
+        }
+
+        .hero p{
+
+            font-size:18px;
+            opacity:.9;
+
+        }
+
+        .blog-card{
+
+            border:none;
+            border-radius:15px;
+            transition:.3s;
+            overflow:hidden;
+            box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+        }
+
+        .blog-card:hover{
+
+            transform:translateY(-8px);
+
+        }
+
+        .blog-card img{
+
+            height:220px;
+            object-fit:cover;
+
+        }
+
+        .category{
+
+            background:white;
+            border-radius:10px;
+            padding:15px;
+            text-align:center;
+            box-shadow:0 2px 10px rgba(0,0,0,.08);
+
+        }
+
+        footer{
+
+            background:#212529;
+            color:white;
+            padding:30px 0;
+            margin-top:80px;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="/">
+            Mini Blog
+        </a>
+
+        <button class="navbar-toggler"
+                data-bs-toggle="collapse"
+                data-bs-target="#menu">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="menu">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/blog">Blogs</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="btn btn-primary ms-2"
+                       href="/register">
+
+                        Register
+
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<section class="hero">
+
+    <div class="container text-center">
+
+        <h1>Read & Share Amazing Articles</h1>
+
+        <p class="mt-3">
+
+            Discover useful blogs about programming,
+            technology and web development.
+
+        </p>
+
+        <a href="/blog"
+           class="btn btn-light btn-lg mt-3">
+
+            Explore Blogs
+
+        </a>
+
+    </div>
+
+</section>
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">
+
+        Latest Blogs
+
+    </h2>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+
+            <div class="card blog-card">
+
+                <img src="https://www.dicsinnovatives.com/blog/wp-content/uploads/2024/08/programing-blog-image.jpg" class="card-img-top" alt="Blog">                <div class="card-body">
+
+                    <h5 class="card-title">Spring Boot Basics</h5>
+
+                    <p class="card-text text-muted">
+                        Learn how to build your first Spring Boot application.
+                    </p>
+
+                    <a href="/blog" class="btn btn-primary">
+                        Read More
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card blog-card">
+
+                <img src="https://www.ekreative.com/wp-content/uploads/2021/03/pankaj-patel-_SgRNwAVNKw-unsplash.jpg" class="card-img-top" alt="Web Development">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">HTML & CSS</h5>
+
+                    <p class="card-text text-muted">
+                        Design responsive web pages with Bootstrap.
+                    </p>
+
+                    <a href="/blog" class="btn btn-primary">
+                        Read More
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card blog-card">
+
+                <img src="https://www.21kschool.com/gh/wp-content/uploads/sites/33/2024/11/Qualities-of-a-Good-Student.png" class="card-img-top" alt="Programming Laptop">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">PostgreSQL</h5>
+
+                    <p class="card-text text-muted">
+                        Store and manage your data efficiently.
+                    </p>
+
+                    <a href="/blog" class="btn btn-primary">
+                        Read More
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card blog-card">
+
+                <img src="https://www.21kschool.com/us/wp-content/uploads/sites/37/2023/11/15-Facts-About-Coding-Every-Kid-Should-Know.png" class="card-img-top" alt="Coding">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">Java Collections</h5>
+
+                    <p class="card-text text-muted">
+                        Understand List, Set and Map with examples.
+                    </p>
+
+                    <a href="/blog" class="btn btn-primary">
+                        Read More
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card blog-card">
+
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRywgNPfXTgdt3FM9wWDh66bo5Q7KjS6Amwz8KJL2DrTEhi2ZobyjKSXc0&s=10" class="card-img-top" alt="Technology">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">Bootstrap 5</h5>
+
+                    <p class="card-text text-muted">
+                        Create modern and responsive user interfaces.
+                    </p>
+
+                    <a href="/blog" class="btn btn-primary">
+                        Read More
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card blog-card">
+
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ35eRhq-Y8t2Otzn_FGvA97wgSUzAHWTriwFt52E3DqL7h6i5djkasBRZR&s=10" class="card-img-top" alt="Software Development">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">REST API</h5>
+
+                    <p class="card-text text-muted">
+                        Learn how backend applications communicate.
+                    </p>
+
+                    <a href="/blog" class="btn btn-primary">
+                        Read More
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<section class="container mt-5">
+
+    <h2 class="text-center mb-4">
+        Categories
+    </h2>
+
+    <div class="row g-3">
+
+        <div class="col-6 col-md-3">
+            <div class="category">
+                <i class="bi bi-code-slash fs-2 text-primary"></i>
+                <h6 class="mt-3">Java</h6>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="category">
+                <i class="bi bi-bootstrap fs-2 text-primary"></i>
+                <h6 class="mt-3">Bootstrap</h6>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="category">
+                <i class="bi bi-database fs-2 text-primary"></i>
+                <h6 class="mt-3">Database</h6>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="category">
+                <i class="bi bi-globe fs-2 text-primary"></i>
+                <h6 class="mt-3">Web</h6>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <div class="container text-center">
+
+        <h5>Mini Blog</h5>
+
+        <p class="mb-1">
+            Share your knowledge with everyone.
+        </p>
+
+        <small>
+            © 2026 Mini Blog - All Rights Reserved
+        </small>
+
+    </div>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
