@@ -175,44 +175,33 @@
     </h2>
 
     <div class="row g-4">
-        <div class="col-md-4">
+        <div class="col-md-4"
+             th:each="blog : ${blogs}">
 
-            <div class="card blog-card">
+            <div class="card h-100">
 
-                <img src="https://www.dicsinnovatives.com/blog/wp-content/uploads/2024/08/programing-blog-image.jpg" class="card-img-top" alt="Blog">                <div class="card-body">
+                <img th:src="${blog.image}"
+                     class="card-img-top"
+                     height="200">
 
-                    <h5 class="card-title">Spring Boot Basics</h5>
-
-                    <p class="card-text text-muted">
-                        Learn how to build your first Spring Boot application.
-                    </p>
-
-                    <a href="/blog?id=1" class="btn btn-primary">
-                        Read More
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-md-4">
-
-            <div class="card blog-card">
-
-                <img src="https://www.ekreative.com/wp-content/uploads/2021/03/pankaj-patel-_SgRNwAVNKw-unsplash.jpg" class="card-img-top" alt="Web Development">
 
                 <div class="card-body">
 
-                    <h5 class="card-title">HTML & CSS</h5>
+                    <h5 class="card-title"
+                        th:text="${blog.title}">
+                    </h5>
 
-                    <p class="card-text text-muted">
-                        Design responsive web pages with Bootstrap.
+
+                    <p class="card-text"
+                       th:text="${blog.content}">
                     </p>
 
-                    <a href="/blog?id=2" class="btn btn-primary">
+
+                    <a th:href="@{/blog/{id}(id=${blog.id})}"
+                       class="btn btn-primary">
+
                         Read More
+
                     </a>
 
                 </div>
@@ -220,103 +209,6 @@
             </div>
 
         </div>
-
-        <div class="col-md-4">
-
-            <div class="card blog-card">
-
-                <img src="https://www.21kschool.com/gh/wp-content/uploads/sites/33/2024/11/Qualities-of-a-Good-Student.png" class="card-img-top" alt="Programming Laptop">
-
-                <div class="card-body">
-
-                    <h5 class="card-title">PostgreSQL</h5>
-
-                    <p class="card-text text-muted">
-                        Store and manage your data efficiently.
-                    </p>
-
-                    <a href="/blog?id=3" class="btn btn-primary">
-                        Read More
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-md-4">
-
-            <div class="card blog-card">
-
-                <img src="https://www.21kschool.com/us/wp-content/uploads/sites/37/2023/11/15-Facts-About-Coding-Every-Kid-Should-Know.png" class="card-img-top" alt="Coding">
-
-                <div class="card-body">
-
-                    <h5 class="card-title">Java Collections</h5>
-
-                    <p class="card-text text-muted">
-                        Understand List, Set and Map with examples.
-                    </p>
-
-                    <a href="/blog?id=4" class="btn btn-primary">
-                        Read More
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-md-4">
-
-            <div class="card blog-card">
-
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRywgNPfXTgdt3FM9wWDh66bo5Q7KjS6Amwz8KJL2DrTEhi2ZobyjKSXc0&s=10" class="card-img-top" alt="Technology">
-
-                <div class="card-body">
-
-                    <h5 class="card-title">Bootstrap 5</h5>
-
-                    <p class="card-text text-muted">
-                        Create modern and responsive user interfaces.
-                    </p>
-
-                    <a href="/blog?id=5" class="btn btn-primary">
-                        Read More
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-md-4">
-
-            <div class="card blog-card">
-
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ35eRhq-Y8t2Otzn_FGvA97wgSUzAHWTriwFt52E3DqL7h6i5djkasBRZR&s=10" class="card-img-top" alt="Software Development">
-
-                <div class="card-body">
-
-                    <h5 class="card-title">REST API</h5>
-
-                    <p class="card-text text-muted">
-                        Learn how backend applications communicate.
-                    </p>
-
-                    <a href="/blog?id=6" class="btn btn-primary">
-                        Read More
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
     </div>
 
 </div>
