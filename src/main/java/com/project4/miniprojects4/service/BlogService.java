@@ -30,4 +30,17 @@ public class BlogService {
     public void delete(Long id) {
         blogRepository.deleteById(id);
     }
+    public void approve(Long id) {
+
+        Blog blog = getBlogById(id);
+
+        if (blog != null) {
+
+            blog.setApproved(true);
+
+            blogRepository.save(blog);
+
+        }
+
+    }
 }

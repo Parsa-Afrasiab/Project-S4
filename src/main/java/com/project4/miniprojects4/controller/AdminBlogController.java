@@ -68,4 +68,12 @@ public class AdminBlogController {
 
     }
 
+    @GetMapping("/approve/{id}")
+    public String approveBlog(@PathVariable Long id) {
+
+        blogService.approve(id);
+
+        return "redirect:/admin/blogs";
+
+    }
 }
