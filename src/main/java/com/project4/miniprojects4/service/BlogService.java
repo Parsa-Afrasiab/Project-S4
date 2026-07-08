@@ -43,4 +43,9 @@ public class BlogService {
         }
 
     }
+    public List<Blog> getApprovedBlogs() {
+
+        return blogRepository.findByApprovedTrue();
+
+    }
 }
