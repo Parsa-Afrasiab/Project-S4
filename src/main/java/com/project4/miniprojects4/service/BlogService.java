@@ -1,51 +1,20 @@
+
 package com.project4.miniprojects4.service;
 
 import com.project4.miniprojects4.model.Blog;
-import com.project4.miniprojects4.repository.BlogRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Service
-public class BlogService {
+public interface BlogService {
 
-    private final BlogRepository blogRepository;
+    void save(Blog blog);
 
-    public BlogService(BlogRepository blogRepository) {
-        this.blogRepository = blogRepository;
-    }
+    List<Blog> getAllBlogs();
 
-    public void save(Blog blog) {
-        blogRepository.save(blog);
-    }
+    Blog getBlogById(Long id);
 
-    public List<Blog> getAllBlogs() {
-        return blogRepository.findAll();
-    }
+    void delete(Long id);
 
-    public Blog getBlogById(Long id) {
-        return blogRepository.findById(id).orElse(null);
-    }
+    void approve(Long id);
 
-    public void delete(Long id) {
-        blogRepository.deleteById(id);
-    }
-    public void approve(Long id) {
-
-        Blog blog = getBlogById(id);
-
-        if (blog != null) {
-
-            blog.setApproved(true);
-
-            blogRepository.save(blog);
-
-        }
-
-    }
-    public List<Blog> getApprovedBlogs() {
-
-        return blogRepository.findByApprovedTrue();
-
-    }
+    List<Blog> getApprovedBlogs();
 }
