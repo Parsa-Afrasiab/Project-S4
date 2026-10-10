@@ -69,6 +69,11 @@
 
         </h2>
 
+        <div th:if="${param.registered != null}"
+             class="alert alert-success">
+            Registration successful! You can now log in.
+        </div>
+
         <form th:action="@{/login}" method="post">
 
             <div class="mb-3">

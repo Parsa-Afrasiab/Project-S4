@@ -68,8 +68,12 @@
             Register
 
         </h2>
+        <div th:if="${param.error != null and param.error[0] == 'email'}"
+             class="alert alert-danger">
+            This email is already registered.
+        </div>
 
-        <form action="/register" method="post">
+        <form th:action="@{/register}" method="post">
 
             <div class="mb-3">
 
