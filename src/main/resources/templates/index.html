@@ -137,6 +137,11 @@
             </ul>
 
         </div>
+        <a th:if="${isAdmin}"
+           th:href="@{/admin}"
+           class="btn btn-dark">
+            Admin Panel
+        </a>
 
     </div>
 

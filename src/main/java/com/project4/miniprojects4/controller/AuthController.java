@@ -16,8 +16,9 @@ public class AuthController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthController(UserService userService,
-                          PasswordEncoder passwordEncoder) {
+    public AuthController(
+            UserService userService,
+            PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -39,10 +40,7 @@ public class AuthController {
             return "redirect:/register?error=email";
         }
 
-        user.setPassword(
-                passwordEncoder.encode(user.getPassword())
-        );
-
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.USER);
 
         userService.save(user);
