@@ -1,5 +1,10 @@
 package com.project4.miniprojects4.model;
 
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -19,6 +24,32 @@ public class Blog {
     private String image;
 
     private boolean approved;
+
+    @Column(unique = true)
+    private String slug;
+
+    @Column(length = 500)
+    private String excerpt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private BlogStatus status = BlogStatus.DRAFT;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
+    private LocalDateTime publishedAt;
+
+    @Column(nullable = false)
+    private long views = 0;
 
     public Blog() {
     }
@@ -70,4 +101,61 @@ public class Blog {
     public void setApproved(boolean approved) {
         this.approved = approved;
     }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public String getExcerpt() {
+        return excerpt;
+    }
+
+    public void setExcerpt(String excerpt) {
+        this.excerpt = excerpt;
+    }
+
+    public BlogStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BlogStatus status) {
+        this.status = status;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public LocalDateTime getPublishedAt() {
+        return publishedAt;
+    }
+
+    public void setPublishedAt(LocalDateTime publishedAt) {
+        this.publishedAt = publishedAt;
+    }
+
+    public long getViews() {
+        return views;
+    }
+
+    public void setViews(long views) {
+        this.views = views;
+    }
+
 }

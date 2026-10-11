@@ -17,4 +17,10 @@ public interface BlogService {
     void approve(Long id);
 
     List<Blog> getApprovedBlogs();
+
+    Blog getBlogBySlug(String slug);
+
+    List<Blog> searchBlogs(String title);
+
+    void increaseViews(Long id);
 }
