@@ -3,7 +3,6 @@ package com.project4.miniprojects4.service;
 
 import com.project4.miniprojects4.model.Comment;
 import com.project4.miniprojects4.repository.CommentRepository;
-import com.project4.miniprojects4.service.CommentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> getApprovedCommentsByBlog(Long blogId) {
-        return commentRepository.findByBlogIdAndApprovedTrue(blogId);
+        return commentRepository.findByBlogIdAndApprovedTrueOrderByCreatedAtDesc(blogId);
     }
 
     @Override

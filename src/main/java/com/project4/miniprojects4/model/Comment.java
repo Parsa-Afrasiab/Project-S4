@@ -1,6 +1,9 @@
 package com.project4.miniprojects4.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comments")
@@ -19,6 +22,15 @@ public class Comment {
     @JoinColumn(name = "blog_id")
     private Blog blog;
 
+    @Column(nullable = false)
+    private String authorName;
+
+    @Column(nullable = false)
+    private String authorEmail;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
     public Comment() {
     }
 
@@ -58,5 +70,25 @@ public class Comment {
 
     public void setBlog(Blog blog) {
         this.blog = blog;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getAuthorEmail() {
+        return authorEmail;
+    }
+
+    public void setAuthorEmail(String authorEmail) {
+        this.authorEmail = authorEmail;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }

@@ -9,6 +9,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findByApprovedTrue();
 
-    List<Comment> findByBlogIdAndApprovedTrue(Long blogId);
+    List<Comment> findByBlogIdAndApprovedTrueOrderByCreatedAtDesc(Long blogId);
 
 }
