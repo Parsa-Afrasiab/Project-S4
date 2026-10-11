@@ -1,5 +1,5 @@
 
-package com.project4.miniprojects4;
+package com.project4.miniprojects4.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
