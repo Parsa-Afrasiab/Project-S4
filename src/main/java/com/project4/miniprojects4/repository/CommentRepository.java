@@ -11,4 +11,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findByBlogIdAndApprovedTrueOrderByCreatedAtDesc(Long blogId);
 
+    void deleteByBlogId(Long blogId);
 }

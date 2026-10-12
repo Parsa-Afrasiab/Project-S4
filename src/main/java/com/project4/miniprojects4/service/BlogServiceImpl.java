@@ -4,7 +4,9 @@ package com.project4.miniprojects4.service;
 import com.project4.miniprojects4.model.Blog;
 import com.project4.miniprojects4.model.BlogStatus;
 import com.project4.miniprojects4.repository.BlogRepository;
+import com.project4.miniprojects4.repository.CommentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,8 +16,12 @@ public class BlogServiceImpl implements BlogService {
 
     private final BlogRepository blogRepository;
 
-    public BlogServiceImpl(BlogRepository blogRepository) {
+    private final CommentRepository commentRepository;
+
+    public BlogServiceImpl(BlogRepository blogRepository,
+                           CommentRepository commentRepository) {
         this.blogRepository = blogRepository;
+        this.commentRepository = commentRepository;
     }
 
     @Override
@@ -34,8 +40,12 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
-        blogRepository.deleteById(id);
+        if (blogRepository.existsById(id)) {
+            commentRepository.deleteByBlogId(id);
+            blogRepository.deleteById(id);
+        }
     }
 
 
