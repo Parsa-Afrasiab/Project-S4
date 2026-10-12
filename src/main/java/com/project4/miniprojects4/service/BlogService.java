@@ -20,7 +20,7 @@ public interface BlogService {
 
     Blog getBlogBySlug(String slug);
 
-    List<Blog> searchBlogs(String title);
-
     void increaseViews(Long id);
+
+    List<Blog> searchBlogs(String slug, List<Long> categoryIds);
 }

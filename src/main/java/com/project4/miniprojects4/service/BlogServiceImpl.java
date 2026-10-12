@@ -1,4 +1,3 @@
-
 package com.project4.miniprojects4.service;
 
 import com.project4.miniprojects4.model.Blog;
@@ -7,9 +6,11 @@ import com.project4.miniprojects4.repository.BlogRepository;
 import com.project4.miniprojects4.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.project4.miniprojects4.model.Category;
+import java.text.Normalizer;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -26,6 +27,18 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public void save(Blog blog) {
+        if (blog.getSlug() == null || blog.getSlug().isBlank()) {
+            String slug = Normalizer.normalize(
+                            blog.getTitle().toLowerCase(Locale.ROOT),
+                            Normalizer.Form.NFD
+                    )
+                    .replaceAll("\\p{M}", "")
+                    .replaceAll("[^a-z0-9]+", "-")
+                    .replaceAll("^-|-$", "");
+
+            blog.setSlug(slug);
+        }
+
         blogRepository.save(blog);
     }
 
@@ -77,8 +90,32 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Blog> searchBlogs(String title) {
-        return blogRepository.findByTitleContainingIgnoreCase(title);
+    public List<Blog> searchBlogs(String slug, List<Long> categoryIds) {
+        String keyword = slug == null ? "" : slug.trim();
+
+        List<Blog> blogs;
+
+        if (keyword.isEmpty()) {
+            blogs = blogRepository.findByStatusAndApprovedTrue(
+                    BlogStatus.PUBLISHED
+            );
+        } else {
+            blogs = blogRepository.searchByTag(
+                    keyword,
+                    BlogStatus.PUBLISHED
+            );
+        }
+
+        if (categoryIds != null && !categoryIds.isEmpty()) {
+            blogs = blogs.stream()
+                    .filter(blog -> blog.getCategories().stream()
+                            .map(Category::getId)
+                            .collect(java.util.stream.Collectors.toSet())
+                            .containsAll(categoryIds))
+                    .toList();
+        }
+
+        return blogs;
     }
 
     @Override
