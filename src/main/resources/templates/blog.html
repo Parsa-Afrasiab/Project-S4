@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 
@@ -176,6 +178,10 @@
         <div th:each="comment : ${comments}"
              class="border rounded p-3 mb-3">
 
+            <p class="fw-bold mb-2"
+               th:text="${comment.authorName}">
+            </p>
+
             <p class="mb-0"
                th:text="${comment.message}">
             </p>
@@ -186,34 +192,42 @@
         <hr>
 
 
-        <h5 class="mb-3">
 
-            Add Comment
+        <div sec:authorize="isAuthenticated()">
 
-        </h5>
+            <h5 class="mb-3">Add Comment</h5>
 
+            <form th:action="@{/blog/{id}/comment(id=${blog.id})}"
+                  method="post">
 
-        <form th:action="@{/blog/{id}/comment(id=${blog.id})}" method="post">
+                <div class="mb-3">
+            <textarea
+                    name="message"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Write your comment..."
+                    required></textarea>
+                </div>
 
-            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">
+                    Send Comment
+                </button>
 
-        <textarea
-                name="message"
-                class="form-control"
-                rows="4"
-                placeholder="Write your comment..."
-                required>
-        </textarea>
+            </form>
 
-            </div>
+        </div>
 
-            <button class="btn btn-primary">
+        <div sec:authorize="isAnonymous()">
 
-                Send Comment
+            <h5 class="mb-3">Add Comment</h5>
 
-            </button>
+            <p>
+                Please <a th:href="@{/login}">login</a>
+                to leave a comment.
+            </p>
 
-        </form>
+        </div>
+
 
 
     </div>
