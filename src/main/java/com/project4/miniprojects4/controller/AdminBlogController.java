@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.project4.miniprojects4.service.CategoryService;
 import com.project4.miniprojects4.service.TagService;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -92,5 +94,59 @@ public class AdminBlogController {
 
         return "redirect:/admin/blogs";
 
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editBlog(@PathVariable Long id, Model model) {
+
+        Blog blog = blogService.getBlogById(id);
+
+        model.addAttribute("blog", blog);
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("tags", tagService.getAllTags());
+
+        return "edit-blog";
+    }
+
+    @PostMapping("/update")
+    public String updateBlog(@ModelAttribute Blog formBlog,
+                             @RequestParam(required = false) List<Long> categories,
+                             @RequestParam(required = false) List<Long> tags) {
+
+        Blog blog = blogService.getBlogById(formBlog.getId());
+
+        if (blog == null) {
+            return "redirect:/admin/blogs";
+        }
+
+        blog.setTitle(formBlog.getTitle());
+        blog.setImage(formBlog.getImage());
+        blog.setContent(formBlog.getContent());
+
+        if (categories != null) {
+            blog.setCategories(new ArrayList<>(
+                    categories.stream()
+                            .map(id -> categoryService.getCategoryById(id))
+                            .filter(category -> category != null)
+                            .toList()
+            ));
+        } else {
+            blog.setCategories(new ArrayList<>());
+        }
+
+        if (tags != null) {
+            blog.setTags(new ArrayList<>(
+                    tags.stream()
+                            .map(id -> tagService.getTagById(id))
+                            .filter(tag -> tag != null)
+                            .toList()
+            ));
+        } else {
+            blog.setTags(new ArrayList<>());
+        }
+
+        blogService.save(blog);
+
+        return "redirect:/admin/blogs";
     }
 }

@@ -141,6 +141,10 @@
 
                     <td>
 
+                        <a th:href="@{/admin/blogs/edit/{id}(id=${blog.id})}"
+                           class="btn btn-primary btn-sm">
+                            Edit
+                        </a>
 
                         <a th:if="${!blog.approved}"
                            th:href="@{/admin/blogs/approve/{id}(id=${blog.id})}"
