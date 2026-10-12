@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -541,6 +543,7 @@
 
 <body>
 
+
 <header class="topbar">
     <nav class="nav-inner">
         <a th:href="@{/}" class="logo">BYTE<span>SPACE</span></a>
@@ -548,13 +551,34 @@
         <div class="nav-links">
             <a th:href="@{/}">Home</a>
             <a th:href="@{/blog}" class="active">Articles</a>
+
+            <a th:href="@{/admin}"
+               sec:authorize="hasRole('ADMIN')">
+                Admin Dashboard
+            </a>
         </div>
 
-        <a th:href="@{/login}" class="nav-login">
-            Sign in <i class="bi bi-arrow-up-right"></i>
-        </a>
+        <div sec:authorize="isAnonymous()">
+            <a th:href="@{/login}" class="nav-login">
+                Login
+            </a>
+
+            <a th:href="@{/register}" class="nav-login">
+                Register
+            </a>
+        </div>
+
+        <form th:action="@{/logout}"
+              method="post"
+              sec:authorize="isAuthenticated()">
+            <button type="submit" class="nav-login">
+                <i class="bi bi-box-arrow-right"></i>
+                Logout
+            </button>
+        </form>
     </nav>
 </header>
+
 
 <main class="container-main">
 
