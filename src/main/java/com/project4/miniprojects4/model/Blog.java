@@ -4,7 +4,8 @@ package com.project4.miniprojects4.model;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
-
+import java.util.ArrayList;
+import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
@@ -38,6 +39,22 @@ public class Blog {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
+
+    @ManyToMany
+    @JoinTable(
+            name = "blog_categories",
+            joinColumns = @JoinColumn(name = "blog_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "blog_tags",
+            joinColumns = @JoinColumn(name = "blog_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tags = new ArrayList<>();
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -156,6 +173,22 @@ public class Blog {
 
     public void setViews(long views) {
         this.views = views;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
 }
