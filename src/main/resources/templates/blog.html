@@ -161,6 +161,25 @@
 
         </p>
 
+        <hr>
+
+        <div class="mb-3">
+            <strong>Categories: </strong>
+
+            <span th:each="category : ${blog.categories}"
+                  class="badge bg-success me-2"
+                  th:text="${category.name}">
+            </span>
+         </div>
+
+        <div class="mb-3">
+            <strong>Tags: </strong>
+
+            <span th:each="tag : ${blog.tags}"
+                  class="badge bg-primary me-2"
+                  th:text="${tag.name}">
+             </span>
+        </div>
 
     </div>
 
