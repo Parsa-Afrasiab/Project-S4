@@ -34,6 +34,12 @@ public class BlogController {
 
         Blog blog = blogService.getBlogById(id);
 
+        if (blog == null) {
+            return "redirect:/blog";
+        }
+
+        blogService.increaseViews(id);
+
         model.addAttribute("blog", blog);
 
         model.addAttribute(

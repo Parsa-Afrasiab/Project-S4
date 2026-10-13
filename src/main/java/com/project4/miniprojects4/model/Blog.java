@@ -36,9 +36,8 @@ public class Blog {
     @Column(nullable = false)
     private BlogStatus status = BlogStatus.DRAFT;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private User author;
+    @Column(name = "author", nullable = false)
+    private String author;
 
     @ManyToMany
     @JoinTable(
@@ -143,11 +142,11 @@ public class Blog {
         this.status = status;
     }
 
-    public User getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 
