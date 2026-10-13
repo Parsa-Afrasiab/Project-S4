@@ -1,125 +1,526 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Categories</title>
+
+    <title>Manage Categories | BYTE SPACE</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+          rel="stylesheet">
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
-            margin: 0;
-            padding: 30px;
+        :root {
+            --cream: #f7f4ee;
+            --navy: #202c3c;
+            --terracotta: #bc735c;
+            --text: #343a40;
+            --muted: #858585;
+            --border: #e9e2d8;
+            --white: #ffffff;
+            --danger: #b84d4d;
+            --sage: #778875;
         }
 
-        .container {
-            max-width: 900px;
-            margin: auto;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--text);
+            font-family: Arial, sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--navy);
+            padding: 18px 0;
+            box-shadow: 0 3px 14px rgba(32, 44, 60, .10);
+        }
+
+        .navbar-brand {
+            color: var(--white);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+        }
+
+        .navbar-brand span {
+            color: #d89a83;
+        }
+
+        .home-btn {
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, .4);
+            border-radius: 9px;
+            padding: 9px 15px;
+            text-decoration: none;
+            transition: .2s;
+        }
+
+        .home-btn:hover {
+            color: var(--navy);
+            background: var(--white);
+        }
+
+        /* Main layout */
+        .page-container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 28px 20px 60px;
+        }
+
+        /* Dashboard navigation */
+        .dashboard-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 11px 16px;
+            margin-bottom: 30px;
+            background: var(--white);
+            color: var(--navy);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: 0 3px 10px rgba(32, 44, 60, .035);
+            transition: .2s;
+        }
+
+        .dashboard-back:hover {
+            color: var(--white);
+            background: var(--navy);
+            border-color: var(--navy);
+            transform: translateX(-3px);
+        }
+
+        .dashboard-back i {
+            font-size: 17px;
+        }
+
+        /* Page heading */
+        .eyebrow {
+            color: var(--terracotta);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
         h1 {
-            color: #263238;
-            margin-top: 0;
+            color: var(--navy);
+            font-size: clamp(28px, 4vw, 36px);
+            font-weight: 800;
+            letter-spacing: -.7px;
+            margin-bottom: 10px;
         }
 
-        form {
+        .subtitle {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        /* Cards */
+        .content-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 26px;
+            margin-bottom: 22px;
+            box-shadow: 0 5px 18px rgba(32, 44, 60, .035);
+        }
+
+        .section-title {
+            color: var(--navy);
+            font-size: 17px;
+            font-weight: 750;
+            margin-bottom: 18px;
+        }
+
+        /* Add category form */
+        .category-form {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr auto;
+            align-items: center;
+            gap: 12px;
+            margin: 0;
+        }
+
+        .category-input {
+            width: 100%;
+            min-width: 0;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #fdfcf9;
+            color: var(--text);
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .category-input:focus {
+            border-color: var(--terracotta);
+            box-shadow: 0 0 0 3px rgba(188, 115, 92, .12);
+        }
+
+        .btn-add {
+            padding: 12px 18px;
+            background: var(--navy);
+            color: var(--white);
+            border: 1px solid var(--navy);
+            border-radius: 9px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: .2s;
+        }
+
+        .btn-add:hover {
+            background: var(--terracotta);
+            border-color: var(--terracotta);
+            color: var(--white);
+        }
+
+        /* Table */
+        .table-heading {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 25px;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
         }
 
-        input {
-            flex: 1;
-            min-width: 180px;
-            padding: 11px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+        .table-heading .section-title {
+            margin-bottom: 0;
         }
 
-        button {
-            padding: 11px 18px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
+        .category-count {
+            background: #eaf0e7;
+            color: #526a50;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .table-responsive {
+            border: 1px solid var(--border);
+            border-radius: 10px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            margin: 0;
         }
 
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
+        thead th {
+            padding: 15px 18px;
+            background: #f8f5ef;
+            color: var(--navy);
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            white-space: nowrap;
         }
 
-        th {
-            background: #f8fafc;
+        tbody td {
+            padding: 15px 18px;
+            border-bottom: 1px solid #f0ece5;
+            vertical-align: middle;
+            font-size: 14px;
         }
 
-        .delete {
-            background: #dc2626;
-            text-decoration: none;
-            color: white;
-            padding: 7px 10px;
-            border-radius: 5px;
+        tbody tr:last-child td {
+            border-bottom: none;
         }
 
-        .back {
+        tbody tr:hover {
+            background: #fdfbf7;
+        }
+
+        .category-id {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .category-name {
             display: inline-block;
-            margin-top: 20px;
-            color: #2563eb;
-            text-decoration: none;
+            padding: 6px 11px;
+            border-radius: 7px;
+            background: #eaf0e7;
+            color: #526a50;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .category-description {
+            color: #6f7479;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .delete-form {
+            margin: 0;
+        }
+
+        .btn-delete {
+            padding: 8px 12px;
+            background: #fff5f3;
+            color: var(--danger);
+            border: 1px solid #f0d6d0;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            transition: .2s;
+        }
+
+        .btn-delete:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: var(--white);
+        }
+
+        /* Empty state */
+        .empty-state {
+            padding: 35px 15px;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        .empty-state i {
+            display: block;
+            font-size: 30px;
+            color: #c9b9a9;
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .category-form {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-add {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-container {
+                padding: 22px 14px 45px;
+            }
+
+            .navbar {
+                padding: 15px 0;
+            }
+
+            .navbar-brand {
+                font-size: 18px;
+            }
+
+            .dashboard-back {
+                margin-bottom: 25px;
+            }
+
+            .content-card {
+                padding: 18px;
+            }
+
+            thead th,
+            tbody td {
+                padding: 12px 10px;
+            }
         }
     </style>
 </head>
 
 <body>
-<div class="container">
+
+<nav class="navbar">
+    <div class="container d-flex justify-content-between align-items-center">
+
+        <a class="navbar-brand" th:href="@{/}">
+            BYTE <span>SPACE</span>
+        </a>
+
+        <a th:href="@{/}" class="home-btn">
+            <i class="bi bi-house-door me-1"></i>
+            View Website
+        </a>
+
+    </div>
+</nav>
+
+<main class="page-container">
+
+    <!-- Back to Dashboard -->
+    <a class="dashboard-back" th:href="@{/admin}">
+        <i class="bi bi-arrow-left"></i>
+        Back to Admin Dashboard
+    </a>
+
+    <!-- Page heading -->
+    <div class="eyebrow">Administration</div>
+
     <h1>Manage Categories</h1>
 
-    <form th:action="@{/admin/categories/save}" method="post">
-        <input type="text" name="name" placeholder="Category name" required>
-        <input type="text" name="description" placeholder="Description">
-        <button type="submit">Add Category</button>
-    </form>
+    <p class="subtitle">
+        Organize your articles into categories and help readers find relevant content.
+    </p>
 
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Action</th>
-        </tr>
-        </thead>
+    <!-- Add Category -->
+    <section class="content-card">
 
-        <tbody>
-        <tr th:each="category : ${categories}">
-            <td th:text="${category.id}"></td>
-            <td th:text="${category.name}"></td>
-            <td th:text="${category.description}"></td>
-            <td>
-                <form th:action="@{/admin/categories/delete/{id}(id=${category.id})}"
-                      method="post">
-                    <button type="submit" class="delete">Delete</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <h2 class="section-title">
+            <i class="bi bi-folder-plus me-2" style="color: var(--terracotta);"></i>
+            Add New Category
+        </h2>
 
-    <a class="back" th:href="@{/admin}">Back to Admin Dashboard</a>
-</div>
+        <form th:action="@{/admin/categories/save}"
+              method="post"
+              class="category-form">
+
+            <input type="text"
+                   name="name"
+                   class="category-input"
+                   placeholder="Category name"
+                   maxlength="100"
+                   required>
+
+            <input type="text"
+                   name="description"
+                   class="category-input"
+                   placeholder="Description (optional)"
+                   maxlength="500">
+
+            <button type="submit" class="btn-add">
+                <i class="bi bi-plus-lg me-1"></i>
+                Add Category
+            </button>
+
+        </form>
+
+    </section>
+
+    <!-- Existing Categories -->
+    <section class="content-card">
+
+        <div class="table-heading">
+
+            <h2 class="section-title">
+                <i class="bi bi-collection me-2" style="color: var(--terracotta);"></i>
+                Existing Categories
+            </h2>
+
+            <span class="category-count"
+                  th:text="${#lists.size(categories)} + ' categories'">
+                0 categories
+            </span>
+
+        </div>
+
+        <div class="table-responsive">
+
+            <table>
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="category : ${categories}">
+
+                    <td class="category-id" th:text="${category.id}">1</td>
+
+                    <td>
+                        <span class="category-name"
+                              th:text="${category.name}">
+                            Technology
+                        </span>
+                    </td>
+
+                    <td class="category-description"
+                        th:text="${category.description != null and !#strings.isEmpty(category.description) ? category.description : '—'}">
+                        Category description
+                    </td>
+
+                    <td>
+                        <form th:action="@{/admin/categories/delete/{id}(id=${category.id})}"
+                              method="post"
+                              class="delete-form">
+
+                            <button type="submit" class="btn-delete">
+                                <i class="bi bi-trash3 me-1"></i>
+                                Delete
+                            </button>
+
+                        </form>
+                    </td>
+
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(categories)}">
+                    <td colspan="4">
+
+                        <div class="empty-state">
+                            <i class="bi bi-folder2-open"></i>
+
+                            <div class="fw-semibold mb-1">
+                                No categories yet
+                            </div>
+
+                            <div class="small">
+                                Add your first category using the form above.
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <footer class="footer">
+        BYTE SPACE · Content Management
+    </footer>
+
+</main>
+
 </body>
 </html>
