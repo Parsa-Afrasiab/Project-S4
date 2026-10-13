@@ -2,25 +2,30 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Explore Articles | ByteSpace</title>
+    <title>Explore Articles | BYTE SPACE</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
           rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
         :root {
-            --bg: #f7f5f0;
-            --surface: #ffffff;
-            --navy: #202c43;
-            --muted: #777e89;
-            --accent: #b7654b;
-            --line: #e9e5dc;
+            --navy: #17233f;
+            --navy-light: #243453;
+            --cream: #f8f6f0;
+            --purple: #8265a7;
+            --purple-dark: #70548f;
+            --purple-light: #f0eafa;
+            --text: #354057;
+            --muted: #788195;
+            --white: #ffffff;
+            --border: #e8e8ee;
         }
 
         * {
@@ -29,9 +34,10 @@
 
         body {
             margin: 0;
-            background: var(--bg);
-            color: var(--navy);
+            background: var(--cream);
+            color: var(--text);
             font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.7;
         }
 
         a {
@@ -39,186 +45,276 @@
             text-decoration: none;
         }
 
-        .topbar {
-            background: #fff;
-            border-bottom: 1px solid var(--line);
-        }
+        /* Navbar */
 
-        .nav-inner {
-            max-width: 1200px;
-            min-height: 76px;
-            margin: auto;
-            padding: 0 28px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .logo {
-            font-size: 23px;
-            font-weight: 800;
-            letter-spacing: -1px;
-        }
-
-        .logo span {
-            color: var(--accent);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-        }
-
-        .nav-links a {
-            font-size: 13px;
-            color: #69707b;
-        }
-
-        .nav-links a.active {
-            color: var(--navy);
-            font-weight: 700;
-        }
-
-        .nav-login {
-            padding: 11px 17px;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            background: #fff;
-            color: var(--navy);
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .nav-login:hover {
+        .navbar {
+            padding: 17px 0;
             background: var(--navy);
-            color: #fff;
+            box-shadow: 0 4px 18px rgba(23, 35, 63, .1);
         }
 
-        .container-main {
-            max-width: 1200px;
-            margin: auto;
-            padding: 0 28px;
-        }
-
-        .intro {
-            padding: 60px 0 38px;
-        }
-
-        .overline {
+        .navbar-brand {
             display: inline-flex;
             align-items: center;
-            gap: 9px;
-            color: var(--accent);
+            gap: 11px;
+            color: var(--white);
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .navbar-brand:hover {
+            color: #d9c8f0;
+        }
+
+        .brand-icon {
+            display: flex;
+            width: 43px;
+            height: 43px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .12);
+            font-size: 22px;
+        }
+
+        .brand-subtitle {
+            display: block;
+            margin-top: -4px;
+            color: #c5ccda;
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        .navbar .nav-link {
+            margin: 0 5px;
+            color: #e1e5ee;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .navbar .nav-link:hover,
+        .navbar .nav-link:focus,
+        .navbar .nav-link.active {
+            color: #d9c8f0;
+        }
+
+        .navbar-toggler {
+            border-color: rgba(255, 255, 255, .3);
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(1);
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: 0 0 0 3px rgba(217, 200, 240, .2);
+        }
+
+        .btn-primary-custom,
+        .btn-outline-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 11px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: .2s ease;
+        }
+
+        .btn-primary-custom {
+            border: 1px solid var(--purple);
+            background: var(--purple);
+            color: var(--white);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            border-color: var(--purple-dark);
+            background: var(--purple-dark);
+            color: var(--white);
+        }
+
+        .btn-outline-custom {
+            border: 1px solid #cdd2df;
+            background: transparent;
+            color: var(--navy);
+        }
+
+        .btn-outline-custom:hover {
+            border-color: var(--navy);
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        .navbar .btn-outline-custom {
+            border-color: rgba(255, 255, 255, .45);
+            color: var(--white);
+        }
+
+        .navbar .btn-outline-custom:hover {
+            background: var(--white);
+            color: var(--navy);
+        }
+
+        /* Page introduction */
+
+        .page-hero {
+            position: relative;
+            overflow: hidden;
+            padding: 70px 0 75px;
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        .page-hero::before {
+            position: absolute;
+            top: -170px;
+            right: -70px;
+            width: 390px;
+            height: 390px;
+            border-radius: 50%;
+            background: rgba(130, 101, 167, .2);
+            content: "";
+        }
+
+        .page-hero::after {
+            position: absolute;
+            bottom: -130px;
+            left: 25%;
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .04);
+            content: "";
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 13px;
+            border: 1px solid rgba(217, 200, 240, .4);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, .045);
+            color: #d9c8f0;
             font-size: 11px;
             font-weight: 800;
-            letter-spacing: 1.8px;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
         }
 
-        .overline::before {
-            content: "";
-            width: 25px;
-            height: 2px;
-            background: var(--accent);
-        }
-
-        .intro h1 {
-            margin: 17px 0 12px;
-            max-width: 750px;
-            font-size: clamp(38px, 5vw, 58px);
+        .page-hero h1 {
+            max-width: 780px;
+            margin: 22px 0 15px;
+            color: var(--white);
+            font-size: clamp(2.4rem, 5vw, 4rem);
             font-weight: 800;
-            letter-spacing: -2.5px;
-            line-height: 1.12;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
         }
 
-        .intro p {
-            max-width: 600px;
-            color: var(--muted);
+        .page-hero h1 span {
+            color: #cbb6e7;
+        }
+
+        .page-hero p {
+            max-width: 620px;
+            margin-bottom: 0;
+            color: #cbd2df;
             font-size: 15px;
-            line-height: 1.8;
+            line-height: 1.9;
         }
 
-        .search-row {
-            display: flex;
-            max-width: 700px;
-            margin-top: 26px;
-            padding: 6px;
-            gap: 8px;
-            background: #fff;
-            border: 1px solid var(--line);
-            border-radius: 10px;
+        /* Search */
+
+        .search-section {
+            position: relative;
+            z-index: 2;
+            margin-top: -30px;
         }
 
-        .search-row i {
-            align-self: center;
-            padding-left: 13px;
-            color: #9297a0;
+        .search-box {
+            padding: 22px;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            background: var(--white);
+            box-shadow: 0 12px 32px rgba(23, 35, 63, .07);
         }
 
-        .search-row input[type="search"] {
-            flex: 1;
-            width: 0;
-            min-width: 0;
-            padding: 12px 3px;
-            border: 0;
-            outline: none;
-            background: transparent;
+        .search-input {
+            min-height: 48px;
+            border: 1px solid #e3e4eb;
+            border-radius: 9px;
+            background: #fdfdfd;
             font-size: 13px;
         }
 
-        .btn-accent {
-            padding: 12px 19px;
-            border: 0;
-            border-radius: 7px;
-            background: var(--accent);
-            color: #fff;
-            font-size: 12px;
-            font-weight: 700;
-            transition: .2s;
+        .search-input:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(130, 101, 167, .12);
         }
 
-        .btn-accent:hover {
-            background: #98513c;
-            color: #fff;
+        .search-icon {
+            border-color: #e3e4eb;
+            border-radius: 9px 0 0 9px;
+            background: #fdfdfd;
+            color: var(--purple);
+        }
+
+        /* Main content */
+
+        .content-section {
+            padding: 65px 0 80px;
         }
 
         .main-layout {
             display: grid;
-            grid-template-columns: 230px minmax(0, 1fr);
+            grid-template-columns: 255px minmax(0, 1fr);
             align-items: start;
-            gap: 30px;
-            padding: 30px 0 75px;
-            border-top: 1px solid var(--line);
+            gap: 27px;
+        }
+
+        .sidebar,
+        .article {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--white);
+            box-shadow: 0 4px 14px rgba(23, 35, 63, .025);
         }
 
         .sidebar {
-            padding: 22px;
-            background: #fff;
-            border: 1px solid var(--line);
-            border-radius: 12px;
+            padding: 23px;
         }
 
         .sidebar-title {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 23px;
+            gap: 10px;
+            margin-bottom: 22px;
+            color: var(--navy);
+            font-size: 16px;
+            font-weight: 800;
         }
 
-        .sidebar-title h2 {
-            margin: 0;
-            font-size: 15px;
-            font-weight: 800;
+        .sidebar-title i {
+            color: var(--purple);
         }
 
         .filter-label {
-            margin-bottom: 15px;
-            color: #8a8e95;
+            margin-bottom: 12px;
+            color: var(--muted);
             font-size: 10px;
             font-weight: 800;
-            letter-spacing: 1.2px;
+            letter-spacing: 1.3px;
             text-transform: uppercase;
         }
 
@@ -227,24 +323,28 @@
             align-items: center;
             gap: 10px;
             margin: 15px 0;
+            color: var(--text);
             font-size: 13px;
             cursor: pointer;
+            overflow-wrap: anywhere;
         }
 
         .check-item input {
             width: 16px;
             height: 16px;
-            accent-color: var(--accent);
+            flex-shrink: 0;
+            accent-color: var(--purple);
         }
 
         .and-note {
-            margin: 20px 0;
-            padding: 12px;
-            background: #faf1eb;
-            border-radius: 7px;
-            color: #8e5a45;
+            margin: 21px 0;
+            padding: 13px;
+            border: 1px solid #e7def3;
+            border-radius: 10px;
+            background: var(--purple-light);
+            color: #66527f;
             font-size: 11px;
-            line-height: 1.7;
+            line-height: 1.8;
         }
 
         .filter-submit {
@@ -253,49 +353,61 @@
 
         .reset {
             display: block;
-            padding: 13px 0 0;
+            padding-top: 14px;
             color: var(--muted);
             font-size: 12px;
             text-align: center;
         }
 
         .reset:hover {
-            color: var(--accent);
+            color: var(--purple);
         }
 
-        .section-head {
+        /* Article list */
+
+        .article-results {
+            min-width: 0;
+        }
+
+        .section-heading {
             display: flex;
-            justify-content: space-between;
             align-items: end;
-            gap: 15px;
-            margin-bottom: 22px;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 25px;
         }
 
-        .section-head h2 {
-            margin: 0 0 7px;
-            font-size: 24px;
+        .section-eyebrow {
+            margin-bottom: 6px;
+            color: var(--purple);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.7px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            margin: 0;
+            color: var(--navy);
+            font-size: clamp(1.5rem, 3vw, 2rem);
             font-weight: 800;
             letter-spacing: -.7px;
         }
 
-        .section-head p {
-            margin: 0;
+        .section-description {
+            margin: 7px 0 0;
             color: var(--muted);
-            font-size: 12px;
+            font-size: 13px;
         }
 
-        .count {
-            padding: 8px 11px;
-            border: 1px solid var(--line);
-            border-radius: 7px;
-            color: #737984;
+        .result-count {
+            flex-shrink: 0;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--white);
+            color: var(--muted);
             font-size: 11px;
-            white-space: nowrap;
-        }
-
-        .article-results {
-            min-width: 0;
-            width: 100%;
         }
 
         .articles {
@@ -307,24 +419,23 @@
         .article {
             min-width: 0;
             overflow: hidden;
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            transition: box-shadow .2s, transform .2s;
+            transition: transform .25s ease, box-shadow .25s ease;
         }
 
         .article:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px #202c430c;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(23, 35, 63, .09);
         }
 
         .cover {
             display: flex;
+            width: 100%;
             height: 210px;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            background: #eae4d9;
+            background: var(--purple-light);
+            color: var(--purple);
         }
 
         .cover img {
@@ -332,7 +443,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform .35s;
+            transition: transform .35s ease;
         }
 
         .article:hover .cover img {
@@ -340,17 +451,23 @@
         }
 
         .no-cover {
-            color: #a58c75;
-            font-size: 38px;
+            color: var(--purple);
+            font-size: 45px;
         }
 
         .article-info {
+            display: flex;
+            min-height: 245px;
+            flex-direction: column;
             padding: 21px;
         }
 
         .article-kicker {
-            margin-bottom: 12px;
-            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 11px;
+            color: var(--purple);
             font-size: 10px;
             font-weight: 800;
             letter-spacing: 1px;
@@ -359,24 +476,29 @@
 
         .article h3 {
             margin: 0 0 11px;
-            font-size: 19px;
+            color: var(--navy);
+            font-size: 18px;
             font-weight: 800;
-            line-height: 1.45;
+            line-height: 1.5;
             overflow-wrap: anywhere;
         }
 
+        .article h3 a {
+            color: inherit;
+        }
+
         .article h3 a:hover {
-            color: var(--accent);
+            color: var(--purple);
         }
 
         .description {
             display: -webkit-box;
             overflow: hidden;
-            min-height: 57px;
+            min-height: 68px;
             margin: 0 0 18px;
             color: var(--muted);
             font-size: 12px;
-            line-height: 1.8;
+            line-height: 1.9;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 3;
         }
@@ -386,62 +508,101 @@
             align-items: center;
             justify-content: space-between;
             gap: 10px;
+            margin-top: auto;
             padding-top: 14px;
-            border-top: 1px solid #f0ede7;
+            border-top: 1px solid #eeedf2;
         }
 
         .article-date {
-            color: #9297a0;
+            color: #858b99;
             font-size: 10px;
         }
 
         .read-link {
-            color: var(--accent);
+            display: inline-flex;
+            flex-shrink: 0;
+            align-items: center;
+            gap: 6px;
+            color: var(--purple);
             font-size: 12px;
             font-weight: 800;
         }
 
-        .read-link i {
-            margin-left: 4px;
+        .read-link:hover {
+            color: var(--navy);
         }
 
-        .empty {
-            padding: 65px 20px;
-            background: #fff;
-            border: 1px solid var(--line);
-            border-radius: 12px;
+        /* Empty state */
+
+        .empty-state {
+            padding: 55px 20px;
+            border: 1px dashed #d8d2e2;
+            border-radius: 17px;
+            background: rgba(255, 255, 255, .65);
             text-align: center;
         }
 
-        .empty i {
-            display: block;
-            margin-bottom: 15px;
-            color: #b3a493;
-            font-size: 38px;
+        .empty-state > i {
+            color: var(--purple);
+            font-size: 43px;
         }
 
-        .empty h3 {
-            font-size: 22px;
+        .empty-state h3 {
+            margin-top: 14px;
+            color: var(--navy);
+            font-size: 21px;
             font-weight: 800;
         }
 
-        .empty p {
+        .empty-state p {
             color: var(--muted);
             font-size: 13px;
         }
 
+        /* Footer */
+
         footer {
-            padding: 24px;
-            border-top: 1px solid var(--line);
-            background: #fff;
-            color: var(--muted);
-            font-size: 11px;
-            text-align: center;
+            padding: 35px 0 25px;
+            background: #111b31;
+            color: #c4ccda;
         }
 
-        @media (max-width: 850px) {
+        .footer-brand {
+            color: var(--white);
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .footer-brand:hover {
+            color: #d9c8f0;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #c4ccda;
+            font-size: 13px;
+        }
+
+        .footer-links a:hover {
+            color: #d9c8f0;
+        }
+
+        .footer-copy {
+            color: #8e99ad;
+            font-size: 12px;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 991px) {
             .main-layout {
-                grid-template-columns: 200px minmax(0, 1fr);
+                grid-template-columns: 220px minmax(0, 1fr);
                 gap: 18px;
             }
 
@@ -454,55 +615,22 @@
             }
         }
 
-        @media (max-width: 620px) {
-            .nav-inner {
-                min-height: 68px;
-                padding: 12px 17px;
-                gap: 10px;
-                flex-wrap: wrap;
+        @media (max-width: 767px) {
+            .page-hero {
+                padding: 60px 0 65px;
             }
 
-            .logo {
-                font-size: 18px;
-            }
-
-            .nav-links {
-                gap: 12px;
-            }
-
-            .nav-links a {
-                font-size: 11px;
-            }
-
-            .nav-login {
-                padding: 9px;
-                font-size: 10px;
-            }
-
-            .container-main {
-                padding: 0 17px;
-            }
-
-            .intro {
-                padding: 45px 0 30px;
-            }
-
-            .intro h1 {
-                letter-spacing: -1.5px;
-            }
-
-            .intro p {
-                font-size: 13px;
+            .content-section {
+                padding: 48px 0 60px;
             }
 
             .main-layout {
                 grid-template-columns: 1fr;
-                gap: 23px;
-                padding-top: 22px;
+                gap: 25px;
             }
 
             .sidebar {
-                padding: 19px;
+                padding: 20px;
             }
 
             .articles {
@@ -510,34 +638,64 @@
             }
 
             .cover {
-                height: 220px;
+                height: 230px;
             }
 
-            .section-head h2 {
-                font-size: 21px;
+            .search-box {
+                padding: 17px;
+            }
+
+            .section-heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .footer-content {
+                align-items: flex-start !important;
+                flex-direction: column;
             }
         }
 
-        @media (max-width: 390px) {
-            .nav-links {
-                gap: 7px;
+        @media (max-width: 575px) {
+            .navbar-brand {
+                font-size: 1.2rem;
             }
 
-            .nav-login {
-                padding: 8px 6px;
+            .brand-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 19px;
             }
 
-            .search-row {
-                gap: 3px;
+            .brand-subtitle {
+                font-size: 8px;
+                letter-spacing: 1.4px;
             }
 
-            .search-row .btn-accent {
-                padding: 11px;
+            .page-hero h1 {
+                letter-spacing: -1px;
             }
 
-            .section-head {
-                align-items: start;
+            .article-info {
+                padding: 18px;
+            }
+
+            .article-bottom {
+                align-items: flex-start;
                 flex-direction: column;
+            }
+
+            .read-link {
+                margin-top: 3px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition: none !important;
             }
         }
     </style>
@@ -545,191 +703,395 @@
 
 <body>
 
-<header class="topbar">
-    <nav class="nav-inner">
-        <a th:href="@{/}" class="logo">BYTE<span>SPACE</span></a>
+<!-- Navbar -->
 
-        <div class="nav-links">
-            <a th:href="@{/}">Home</a>
-            <a th:href="@{/blog}" class="active">Articles</a>
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
 
-            <a th:href="@{/admin}"
-               sec:authorize="hasRole('ADMIN')">
-                Admin Dashboard
-            </a>
+        <a class="navbar-brand" th:href="@{/}">
+            <span class="brand-icon">
+                <i class="bi bi-journal-code"></i>
+            </span>
+
+            <span>
+                BYTE SPACE
+                <span class="brand-subtitle">
+                    IDEAS. KNOWLEDGE. COMMUNITY.
+                </span>
+            </span>
+        </a>
+
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active"
+                       th:href="@{/blog}"
+                       aria-current="page">
+                        Articles
+                    </a>
+                </li>
+
+                <li class="nav-item"
+                    sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link" th:href="@{/admin}">
+                        <i class="bi bi-speedometer2 me-1"></i>
+                        Admin Dashboard
+                    </a>
+                </li>
+
+                <li class="nav-item mt-2 mt-lg-0"
+                    sec:authorize="isAnonymous()">
+                    <a class="nav-link" th:href="@{/login}">
+                        Login
+                    </a>
+                </li>
+
+                <li class="nav-item mt-2 mt-lg-0"
+                    sec:authorize="isAnonymous()">
+                    <a class="btn-primary-custom ms-lg-2"
+                       th:href="@{/register}">
+                        Get Started
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </li>
+
+                <li class="nav-item mt-2 mt-lg-0"
+                    sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}"
+                          method="post"
+                          class="ms-lg-2">
+                        <button type="submit"
+                                class="btn-outline-custom">
+                            <i class="bi bi-box-arrow-right"></i>
+                            Logout
+                        </button>
+                    </form>
+                </li>
+
+            </ul>
         </div>
+    </div>
+</nav>
 
-        <div sec:authorize="isAnonymous()">
-            <a th:href="@{/login}" class="nav-login">Login</a>
-            <a th:href="@{/register}" class="nav-login">Register</a>
-        </div>
+<!-- Page introduction -->
 
-        <form th:action="@{/logout}"
-              method="post"
-              sec:authorize="isAuthenticated()">
-            <button type="submit" class="nav-login">
-                <i class="bi bi-box-arrow-right"></i>
-                Logout
-            </button>
-        </form>
-    </nav>
-</header>
+<header class="page-hero">
+    <div class="container hero-content">
 
-<main class="container-main">
+        <span class="hero-label">
+            <i class="bi bi-stars"></i>
+            Discover something new
+        </span>
 
-    <section class="intro">
-        <div class="overline">Discover something new</div>
-
-        <h1>Ideas worth<br>your <span style="color: var(--accent)">time.</span></h1>
+        <h1>
+            Ideas worth<br>
+            your <span>time.</span>
+        </h1>
 
         <p>
             Practical tutorials, useful insights, and fresh ideas for people
             who love technology and building things.
         </p>
 
-        <form th:action="@{/blog}" method="get" class="search-row">
-            <i class="bi bi-search"></i>
+    </div>
+</header>
 
-            <input type="search"
-                   name="q"
-                   placeholder="Search by slug, e.g. java or iphone"
-                   aria-label="Search articles"
-                   th:value="${q}">
+<!-- Search -->
 
-            <button class="btn-accent" type="submit">Search</button>
+<section class="search-section">
+    <div class="container">
 
-            <th:block th:each="id : ${selectedCategoryIds}">
-                <input type="hidden" name="categoryIds" th:value="${id}">
-            </th:block>
-        </form>
-    </section>
-
-    <section class="main-layout">
-
-        <aside class="sidebar">
-            <div class="sidebar-title">
-                <h2><i class="bi bi-sliders me-2"></i>Refine results</h2>
-            </div>
-
+        <div class="search-box">
             <form th:action="@{/blog}" method="get">
-                <input type="hidden" name="q" th:value="${q}">
 
-                <div class="filter-label">Choose categories</div>
+                <div class="row g-3 align-items-center">
 
-                <div th:if="${#lists.isEmpty(categories)}"
-                     class="small text-secondary">
-                    No categories available.
-                </div>
-
-                <label class="check-item" th:each="category : ${categories}">
-                    <input type="checkbox"
-                           name="categoryIds"
-                           th:value="${category.id}"
-                           th:checked="${selectedCategoryIds.contains(category.id)}">
-
-                    <span th:text="${category.name}">Category</span>
-                </label>
-
-                <div class="and-note">
-                    <i class="bi bi-info-circle me-1"></i>
-                    Multiple selections use AND logic. Articles must match
-                    every selected category.
-                </div>
-
-                <button type="submit" class="btn-accent filter-submit">
-                    Show results <i class="bi bi-arrow-right ms-1"></i>
-                </button>
-
-                <a th:href="@{/blog}" class="reset">Reset search and filters</a>
-            </form>
-        </aside>
-
-        <section class="article-results">
-            <div class="section-head">
-                <div>
-                    <h2>Explore articles</h2>
-                    <p>Find your next useful read.</p>
-                </div>
-
-                <span class="count"
-                      th:text="${#lists.size(blogs)} + ' results'">
-                    0 results
-                </span>
-            </div>
-
-            <div class="articles"
-                 th:if="${not #lists.isEmpty(blogs)}">
-
-                <article class="article" th:each="blog : ${blogs}">
-
-                    <a th:href="@{/blog/{id}(id=${blog.id})}"
-                       class="cover">
-
-                        <img th:if="${blog.image != null and blog.image.length > 0}"
-                             th:src="@{/blogs/{id}/image(id=${blog.id})}"
-                             th:alt="${blog.title}"
-                             loading="lazy">
-
-                        <div class="no-cover"
-                             th:if="${blog.image == null or blog.image.length == 0}">
-                            <i class="bi bi-file-earmark-text"></i>
-                        </div>
-                    </a>
-
-                    <div class="article-info">
-                        <div class="article-kicker">Featured reading</div>
-
-                        <h3>
-                            <a th:href="@{/blog/{id}(id=${blog.id})}"
-                               th:text="${blog.title}">
-                                Article title
-                            </a>
-                        </h3>
-
-                        <p class="description"
-                           th:text="${blog.excerpt != null and !blog.excerpt.isEmpty()
-                               ? blog.excerpt
-                               : (blog.content != null
-                                   ? #strings.abbreviate(blog.content, 150)
-                                   : '')}">
-                            Article description
-                        </p>
-
-                        <div class="article-bottom">
-                            <span class="article-date"
-                                  th:text="${blog.publishedAt != null
-                                      ? #temporals.format(blog.publishedAt, 'MMM dd, yyyy')
-                                      : 'Article'}">
-                                Article
+                    <div class="col-lg-9">
+                        <div class="input-group">
+                            <span class="input-group-text search-icon">
+                                <i class="bi bi-search"></i>
                             </span>
 
-                            <a th:href="@{/blog/{id}(id=${blog.id})}"
-                               class="read-link">
-                                Read more <i class="bi bi-arrow-up-right"></i>
-                            </a>
+                            <input class="form-control search-input border-start-0"
+                                   type="search"
+                                   name="q"
+                                   placeholder="Search articles..."
+                                   aria-label="Search articles"
+                                   th:value="${q}">
                         </div>
                     </div>
-                </article>
-            </div>
 
-            <div class="empty" th:if="${#lists.isEmpty(blogs)}">
-                <i class="bi bi-search"></i>
-                <h3>No matching articles</h3>
-                <p>Try another keyword or select fewer categories.</p>
+                    <div class="col-lg-3">
+                        <button type="submit"
+                                class="btn-primary-custom w-100">
+                            Search Articles
+                            <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
 
-                <a th:href="@{/blog}" class="btn-accent d-inline-block mt-2">
-                    View all articles
-                </a>
-            </div>
-        </section>
+                </div>
 
-    </section>
+                <th:block th:each="id : ${selectedCategoryIds}">
+                    <input type="hidden"
+                           name="categoryIds"
+                           th:value="${id}">
+                </th:block>
+
+            </form>
+        </div>
+
+    </div>
+</section>
+
+<!-- Articles and filters -->
+
+<main class="content-section">
+    <div class="container">
+
+        <div class="main-layout">
+
+            <!-- Category filters -->
+
+            <aside class="sidebar">
+
+                <div class="sidebar-title">
+                    <i class="bi bi-sliders"></i>
+                    Refine results
+                </div>
+
+                <form th:action="@{/blog}" method="get">
+
+                    <input type="hidden" name="q" th:value="${q}">
+
+                    <div class="filter-label">
+                        Choose categories
+                    </div>
+
+                    <div th:if="${#lists.isEmpty(categories)}"
+                         class="small text-secondary">
+                        No categories available.
+                    </div>
+
+                    <label class="check-item"
+                           th:each="category : ${categories}">
+
+                        <input type="checkbox"
+                               name="categoryIds"
+                               th:value="${category.id}"
+                               th:checked="${selectedCategoryIds.contains(category.id)}">
+
+                        <span th:text="${category.name}">
+                            Category
+                        </span>
+
+                    </label>
+
+                    <div class="and-note">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Multiple selections use AND logic. Articles must match
+                        every selected category.
+                    </div>
+
+                    <button type="submit"
+                            class="btn-primary-custom filter-submit">
+                        Show results
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+
+                    <a th:href="@{/blog}" class="reset">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>
+                        Reset search and filters
+                    </a>
+
+                </form>
+            </aside>
+
+            <!-- Article results -->
+
+            <section class="article-results">
+
+                <div class="section-heading">
+                    <div>
+                        <div class="section-eyebrow">
+                            Fresh from the blog
+                        </div>
+
+                        <h2 class="section-title">
+                            Explore Articles
+                        </h2>
+
+                        <p class="section-description">
+                            Find your next useful read.
+                        </p>
+                    </div>
+
+                    <span class="result-count"
+                          th:text="${#lists.size(blogs)} + ' results'">
+                        0 results
+                    </span>
+                </div>
+
+                <div class="articles"
+                     th:if="${not #lists.isEmpty(blogs)}">
+
+                    <article class="article"
+                             th:each="blog : ${blogs}">
+
+                        <a th:href="@{/blog/{id}(id=${blog.id})}"
+                           class="cover">
+
+                            <img th:if="${blog.image != null and blog.image.length > 0}"
+                                 th:src="@{/blogs/{id}/image(id=${blog.id})}"
+                                 th:alt="${blog.title}"
+                                 loading="lazy">
+
+                            <div class="no-cover"
+                                 th:if="${blog.image == null or blog.image.length == 0}">
+                                <i class="bi bi-journal-text"></i>
+                            </div>
+
+                        </a>
+
+                        <div class="article-info">
+
+                            <div class="article-kicker">
+                                <i class="bi bi-bookmark-star"></i>
+                                Featured reading
+                            </div>
+
+                            <h3>
+                                <a th:href="@{/blog/{id}(id=${blog.id})}"
+                                   th:text="${blog.title}">
+                                    Article title
+                                </a>
+                            </h3>
+
+                            <p class="description"
+                               th:text="${blog.excerpt != null and !blog.excerpt.isEmpty()
+                                   ? blog.excerpt
+                                   : (blog.content != null
+                                       ? #strings.abbreviate(blog.content, 150)
+                                       : '')}">
+                                Article description
+                            </p>
+
+                            <div class="article-bottom">
+
+                                <span class="article-date"
+                                      th:text="${blog.publishedAt != null
+                                          ? #temporals.format(blog.publishedAt, 'MMM dd, yyyy')
+                                          : 'Article'}">
+                                    Article
+                                </span>
+
+                                <a th:href="@{/blog/{id}(id=${blog.id})}"
+                                   class="read-link">
+                                    Read Article
+                                    <i class="bi bi-arrow-up-right"></i>
+                                </a>
+
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <!-- Empty state -->
+
+                <div class="empty-state"
+                     th:if="${#lists.isEmpty(blogs)}">
+
+                    <i class="bi bi-journal-x"></i>
+
+                    <h3>No matching articles</h3>
+
+                    <p>
+                        Try another keyword or select fewer categories.
+                    </p>
+
+                    <a th:href="@{/blog}"
+                       class="btn-primary-custom mt-2">
+                        View All Articles
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                </div>
+
+            </section>
+
+        </div>
+    </div>
 </main>
 
+<!-- Footer -->
+
 <footer>
-    © <span th:text="${T(java.time.Year).now().value}">2026</span>
-    ByteSpace · Built for curious minds.
+    <div class="container">
+
+        <div class="footer-content d-flex justify-content-between
+                    align-items-center flex-wrap gap-4">
+
+            <div>
+                <a class="footer-brand" th:href="@{/}">
+                    <i class="bi bi-journal-code me-2"></i>
+                    BYTE SPACE
+                </a>
+
+                <p class="mt-2 mb-0 small">
+                    Ideas, knowledge, and stories worth sharing.
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <a th:href="@{/}">Home</a>
+                <a th:href="@{/blog}">Articles</a>
+
+                <a th:href="@{/login}"
+                   sec:authorize="isAnonymous()">
+                    Login
+                </a>
+
+                <a th:href="@{/register}"
+                   sec:authorize="isAnonymous()">
+                    Register
+                </a>
+
+                <a th:href="@{/admin}"
+                   sec:authorize="hasRole('ADMIN')">
+                    Admin Dashboard
+                </a>
+            </div>
+
+        </div>
+
+        <hr class="my-4" style="border-color: #35415a;">
+
+        <p class="footer-copy text-center mb-0">
+            &copy;
+            <span th:text="${T(java.time.Year).now().value}">2026</span>
+            BYTE SPACE. All rights reserved.
+        </p>
+
+    </div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

@@ -1,13 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Home | MiniProjectS4 Blog</title>
+    <title>Home | BYTE SPACE</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
           rel="stylesheet">
@@ -17,15 +17,15 @@
 
     <style>
         :root {
-            --cream: #faf6ef;
-            --cream-dark: #f0e7d9;
-            --navy: #202b3c;
-            --navy-light: #34445b;
-            --terracotta: #c76b4b;
-            --terracotta-dark: #ad5438;
-            --text: #4f5662;
+            --navy: #17233f;
+            --navy-light: #243453;
+            --cream: #f8f6f0;
+            --purple: #8265a7;
+            --purple-light: #f0eafa;
+            --text: #354057;
+            --muted: #788195;
             --white: #ffffff;
-            --border: #e7dfd4;
+            --border: #e8e8ee;
         }
 
         * {
@@ -44,102 +44,152 @@
             text-decoration: none;
         }
 
+        /* Navigation */
+
         .navbar {
-            background: var(--cream);
-            border-bottom: 1px solid var(--border);
-            padding: 18px 0;
+            padding: 17px 0;
+            background: var(--navy);
+            box-shadow: 0 4px 18px rgba(23, 35, 63, 0.1);
         }
 
         .navbar-brand {
-            color: var(--navy);
-            font-size: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            color: var(--white);
+            font-size: 1.4rem;
             font-weight: 800;
-            letter-spacing: -0.5px;
+            letter-spacing: 1px;
         }
 
         .navbar-brand:hover {
-            color: var(--terracotta);
+            color: #d9c8f0;
+        }
+
+        .brand-icon {
+            display: flex;
+            width: 43px;
+            height: 43px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.12);
+            font-size: 22px;
+        }
+
+        .brand-subtitle {
+            display: block;
+            margin-top: -4px;
+            color: #c5ccda;
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 2px;
         }
 
         .nav-link {
-            color: var(--navy);
+            margin: 0 5px;
+            color: #e1e5ee;
+            font-size: 14px;
             font-weight: 600;
-            margin: 0 7px;
         }
 
-        .nav-link:hover {
-            color: var(--terracotta);
+        .nav-link:hover,
+        .nav-link:focus {
+            color: #d9c8f0;
         }
 
         .navbar-toggler {
-            border-color: var(--border);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(1);
         }
 
         .navbar-toggler:focus {
-            box-shadow: 0 0 0 3px rgba(199, 107, 75, 0.15);
+            box-shadow: 0 0 0 3px rgba(217, 200, 240, 0.2);
+        }
+
+        /* Buttons */
+
+        .btn-primary-custom,
+        .btn-outline-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 11px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.2s ease;
         }
 
         .btn-primary-custom {
-            display: inline-block;
-            padding: 11px 22px;
-            border: 0;
-            border-radius: 10px;
-            background: var(--terracotta);
+            border: 1px solid var(--purple);
+            background: var(--purple);
             color: var(--white);
-            font-weight: 700;
-            transition: 0.2s;
         }
 
         .btn-primary-custom:hover {
-            background: var(--terracotta-dark);
-            color: var(--white);
             transform: translateY(-2px);
+            border-color: #70548f;
+            background: #70548f;
+            color: var(--white);
         }
 
         .btn-outline-custom {
-            display: inline-block;
-            padding: 10px 21px;
-            border: 1px solid var(--navy);
-            border-radius: 10px;
+            border: 1px solid #cdd2df;
             background: transparent;
             color: var(--navy);
-            font-weight: 700;
-            transition: 0.2s;
         }
 
         .btn-outline-custom:hover {
+            border-color: var(--navy);
             background: var(--navy);
             color: var(--white);
         }
 
+        .navbar .btn-outline-custom {
+            border-color: rgba(255, 255, 255, 0.45);
+            color: var(--white);
+        }
+
+        .navbar .btn-outline-custom:hover {
+            background: var(--white);
+            color: var(--navy);
+        }
+
+        /* Hero */
+
         .hero {
             position: relative;
             overflow: hidden;
-            padding: 95px 0 85px;
+            padding: 92px 0 88px;
             background: var(--navy);
             color: var(--white);
         }
 
         .hero::before {
-            content: "";
             position: absolute;
-            width: 360px;
-            height: 360px;
-            right: -100px;
-            top: -140px;
+            top: -170px;
+            right: -80px;
+            width: 430px;
+            height: 430px;
             border-radius: 50%;
-            background: rgba(199, 107, 75, 0.2);
+            background: rgba(130, 101, 167, 0.2);
+            content: "";
         }
 
         .hero::after {
-            content: "";
             position: absolute;
-            width: 200px;
-            height: 200px;
-            right: 180px;
-            bottom: -130px;
+            right: 220px;
+            bottom: -140px;
+            width: 250px;
+            height: 250px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.045);
+            content: "";
         }
 
         .hero-content {
@@ -148,35 +198,40 @@
         }
 
         .hero-label {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
             padding: 7px 13px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(217, 200, 240, 0.4);
             border-radius: 30px;
-            color: #f2c4b2;
-            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.045);
+            color: #d9c8f0;
+            font-size: 12px;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 1.1px;
             text-transform: uppercase;
         }
 
         .hero h1 {
-            max-width: 760px;
-            margin: 22px 0;
-            font-size: clamp(2.4rem, 5vw, 4.3rem);
+            max-width: 780px;
+            margin: 24px 0 18px;
+            color: var(--white);
+            font-size: clamp(2.4rem, 5vw, 4.2rem);
             font-weight: 800;
             line-height: 1.15;
             letter-spacing: -1.5px;
         }
 
         .hero p {
-            max-width: 620px;
+            max-width: 610px;
             margin-bottom: 30px;
-            color: #d7dce4;
-            font-size: 1.1rem;
+            color: #cbd2df;
+            font-size: 1.08rem;
+            line-height: 1.9;
         }
 
         .hero .btn-outline-custom {
-            border-color: rgba(255, 255, 255, 0.6);
+            border-color: rgba(255, 255, 255, 0.5);
             color: var(--white);
         }
 
@@ -185,42 +240,71 @@
             color: var(--navy);
         }
 
+        .hero-decoration {
+            position: absolute;
+            right: 9%;
+            top: 50%;
+            display: flex;
+            width: 150px;
+            height: 150px;
+            align-items: center;
+            justify-content: center;
+            transform: translateY(-50%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 35px;
+            background: rgba(255, 255, 255, 0.045);
+            color: rgba(217, 200, 240, 0.7);
+            font-size: 75px;
+            rotate: 8deg;
+        }
+
+        /* Search */
+
         .search-section {
             position: relative;
             z-index: 2;
-            margin-top: -30px;
+            margin-top: -31px;
         }
 
         .search-box {
-            padding: 25px;
+            padding: 24px;
             border: 1px solid var(--border);
-            border-radius: 18px;
+            border-radius: 17px;
             background: var(--white);
-            box-shadow: 0 12px 35px rgba(32, 43, 60, 0.07);
+            box-shadow: 0 12px 32px rgba(23, 35, 63, 0.07);
         }
 
         .search-box label {
             display: block;
             margin-bottom: 8px;
             color: var(--navy);
-            font-size: 0.9rem;
+            font-size: 13px;
             font-weight: 700;
         }
 
         .search-input {
-            min-height: 48px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            background: #fffdfa;
+            min-height: 47px;
+            border: 1px solid #e3e4eb;
+            border-radius: 9px;
+            background: #fdfdfd;
         }
 
         .search-input:focus {
-            border-color: var(--terracotta);
-            box-shadow: 0 0 0 3px rgba(199, 107, 75, 0.12);
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(130, 101, 167, 0.12);
         }
 
+        .search-icon {
+            border-color: #e3e4eb;
+            border-radius: 9px 0 0 9px;
+            background: #fdfdfd;
+            color: var(--purple);
+        }
+
+        /* Sections */
+
         .section {
-            padding: 75px 0;
+            padding: 76px 0;
         }
 
         .section-heading {
@@ -233,10 +317,10 @@
 
         .section-eyebrow {
             margin-bottom: 7px;
-            color: var(--terracotta);
-            font-size: 0.82rem;
+            color: var(--purple);
+            font-size: 11px;
             font-weight: 800;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.8px;
             text-transform: uppercase;
         }
 
@@ -249,22 +333,26 @@
         }
 
         .section-description {
-            margin: 10px 0 0;
-            color: #777d87;
+            margin: 9px 0 0;
+            color: var(--muted);
+            font-size: 14px;
         }
+
+        /* Blog cards */
 
         .blog-card {
             height: 100%;
             overflow: hidden;
             border: 1px solid var(--border);
-            border-radius: 17px;
+            border-radius: 16px;
             background: var(--white);
-            transition: transform 0.25s, box-shadow 0.25s;
+            box-shadow: 0 4px 14px rgba(23, 35, 63, 0.025);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         .blog-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 16px 35px rgba(32, 43, 60, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(23, 35, 63, 0.09);
         }
 
         .blog-image {
@@ -272,7 +360,7 @@
             width: 100%;
             height: 220px;
             object-fit: cover;
-            background: var(--cream-dark);
+            background: #ece8f2;
         }
 
         .blog-image-placeholder {
@@ -281,38 +369,39 @@
             height: 220px;
             align-items: center;
             justify-content: center;
-            background: var(--cream-dark);
-            color: var(--terracotta);
-            font-size: 3rem;
+            background: var(--purple-light);
+            color: var(--purple);
+            font-size: 48px;
         }
 
         .blog-card-body {
             display: flex;
+            min-height: 260px;
             flex-direction: column;
-            height: calc(100% - 220px);
-            padding: 23px;
+            padding: 22px;
         }
 
         .blog-meta {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin-bottom: 13px;
-            color: #858b94;
-            font-size: 0.82rem;
+            margin-bottom: 12px;
+            color: #858b99;
+            font-size: 11px;
         }
 
         .blog-meta i {
-            margin-right: 4px;
-            color: var(--terracotta);
+            margin-right: 3px;
+            color: var(--purple);
         }
 
         .blog-title {
-            margin-bottom: 12px;
+            margin-bottom: 11px;
             color: var(--navy);
-            font-size: 1.25rem;
+            font-size: 19px;
             font-weight: 800;
-            line-height: 1.4;
+            line-height: 1.45;
+            overflow-wrap: anywhere;
         }
 
         .blog-title a {
@@ -320,82 +409,66 @@
         }
 
         .blog-title a:hover {
-            color: var(--terracotta);
+            color: var(--purple);
         }
 
         .blog-excerpt {
             display: -webkit-box;
             overflow: hidden;
-            margin-bottom: 20px;
-            color: #6f7580;
+            margin-bottom: 18px;
+            color: #70798a;
+            font-size: 13px;
+            line-height: 1.8;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 3;
         }
 
         .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
             margin-top: auto;
-            color: var(--terracotta);
+            color: var(--purple);
+            font-size: 13px;
             font-weight: 800;
         }
 
         .read-more:hover {
-            color: var(--terracotta-dark);
+            color: var(--navy);
         }
+
+        /* Empty state */
 
         .empty-state {
-            padding: 55px 20px;
-            border: 1px dashed #d7cbbd;
+            padding: 52px 20px;
+            border: 1px dashed #d8d2e2;
             border-radius: 17px;
+            background: rgba(255, 255, 255, 0.65);
             text-align: center;
-            background: rgba(255, 255, 255, 0.55);
         }
 
-        .empty-state i {
-            color: var(--terracotta);
-            font-size: 2.8rem;
+        .empty-state > i {
+            color: var(--purple);
+            font-size: 43px;
         }
 
         .empty-state h3 {
-            margin-top: 15px;
+            margin-top: 14px;
             color: var(--navy);
+            font-size: 21px;
             font-weight: 800;
         }
+
+        .empty-state p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* Categories */
 
         .category-section {
-            padding: 80px 0;
-            background: #f8f5ef;
-        }
-
-        .category-section .section-heading {
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
-            margin-bottom: 32px;
-        }
-
-        .category-section .section-eyebrow {
-            color: #b7654a;
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .category-section .section-title {
-            color: #202d43;
-            font-size: clamp(28px, 4vw, 40px);
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 12px;
-        }
-
-        .category-section .section-description {
-            color: #777b83;
-            font-size: 15px;
-            line-height: 1.8;
-            max-width: 520px;
-            margin: 0;
+            padding: 78px 0;
+            background: #f0eee8;
         }
 
         .category-grid {
@@ -407,144 +480,171 @@
         .category-card {
             position: relative;
             display: flex;
+            min-height: 190px;
             flex-direction: column;
             align-items: flex-start;
-            min-height: 190px;
-            padding: 26px;
             overflow: hidden;
-            text-decoration: none;
-            background: #fffdf9;
-            border: 1px solid #e9e2d8;
-            border-radius: 20px;
-            box-shadow: 0 5px 18px rgba(32, 45, 67, 0.035);
-            transition: transform 0.25s ease,
-            box-shadow 0.25s ease,
-            border-color 0.25s ease;
+            padding: 25px;
+            border: 1px solid #e2dfeb;
+            border-radius: 17px;
+            background: var(--white);
+            box-shadow: 0 5px 18px rgba(23, 35, 63, 0.035);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         .category-card::after {
-            content: "";
             position: absolute;
-            width: 110px;
-            height: 110px;
-            right: -42px;
-            bottom: -48px;
+            right: -40px;
+            bottom: -45px;
+            width: 115px;
+            height: 115px;
             border-radius: 50%;
-            background: #f3e4d9;
-            transition: transform 0.3s ease;
+            background: var(--purple-light);
+            content: "";
+            transition: transform 0.25s ease;
         }
 
         .category-card:hover {
-            transform: translateY(-6px);
-            border-color: #d9ad98;
-            box-shadow: 0 16px 32px rgba(32, 45, 67, 0.09);
+            transform: translateY(-5px);
+            box-shadow: 0 14px 30px rgba(23, 35, 63, 0.09);
         }
 
         .category-card:hover::after {
-            transform: scale(1.35);
+            transform: scale(1.3);
         }
 
         .category-icon {
             display: flex;
+            width: 47px;
+            height: 47px;
             align-items: center;
             justify-content: center;
-            width: 48px;
-            height: 48px;
-            margin-bottom: 22px;
-            border-radius: 15px;
-            background: #f5e8df;
-            color: #ae6349;
+            margin-bottom: 18px;
+            border-radius: 13px;
+            background: var(--purple-light);
+            color: var(--purple);
             font-size: 21px;
         }
 
         .category-card h3 {
             position: relative;
             z-index: 1;
-            color: #202d43;
-            font-size: 19px;
-            font-weight: 750;
-            margin: 0 0 9px;
+            margin: 0 0 7px;
+            color: var(--navy);
+            font-size: 18px;
+            font-weight: 800;
             overflow-wrap: anywhere;
         }
 
         .category-card p {
             position: relative;
             z-index: 1;
-            color: #777b83;
+            margin: 0;
+            color: var(--muted);
             font-size: 13px;
             line-height: 1.8;
-            margin: 0;
             overflow-wrap: anywhere;
         }
 
         .category-arrow {
             position: absolute;
-            top: 29px;
-            right: 25px;
-            color: #b7654a;
+            top: 27px;
+            right: 24px;
+            color: var(--purple);
             font-size: 18px;
-            transition: transform 0.25s ease;
+            transition: transform 0.2s ease;
         }
 
         .category-card:hover .category-arrow {
-            transform: translateX(4px);
+            transform: translate(3px, -3px);
         }
 
         .category-empty {
             grid-column: 1 / -1;
             padding: 30px;
+            border: 1px dashed #d8d2e2;
+            border-radius: 16px;
+            background: var(--white);
+            color: var(--muted);
             text-align: center;
-            color: #777b83;
-            background: #fffdf9;
-            border: 1px dashed #d9cfc2;
-            border-radius: 18px;
         }
 
+        /* CTA */
+
         .cta-section {
-            padding: 70px 0;
+            padding: 72px 0;
         }
 
         .cta-box {
-            padding: 45px;
-            border-radius: 20px;
-            background: var(--terracotta);
+            position: relative;
+            overflow: hidden;
+            padding: 43px;
+            border-radius: 19px;
+            background: var(--navy);
             color: var(--white);
+        }
+
+        .cta-box::after {
+            position: absolute;
+            top: -95px;
+            right: -55px;
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            background: rgba(130, 101, 167, 0.2);
+            content: "";
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
         }
 
         .cta-box h2 {
             margin-bottom: 12px;
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
             font-weight: 800;
         }
 
         .cta-box p {
             max-width: 650px;
-            margin-bottom: 25px;
-            color: #fff0e9;
+            margin-bottom: 0;
+            color: #cbd2df;
+            font-size: 14px;
         }
 
         .cta-box .btn {
-            padding: 12px 22px;
+            padding: 12px 20px;
+            border: 1px solid var(--purple);
             border-radius: 10px;
-            background: var(--white);
-            color: var(--terracotta-dark);
+            background: var(--purple);
+            color: var(--white);
+            font-size: 14px;
             font-weight: 800;
         }
 
         .cta-box .btn:hover {
-            background: var(--cream);
+            border-color: #70548f;
+            background: #70548f;
         }
 
+        /* Footer */
+
         footer {
-            padding: 35px 0;
-            background: var(--navy);
-            color: #cbd1da;
+            padding: 36px 0 25px;
+            background: #111b31;
+            color: #c4ccda;
         }
 
         .footer-brand {
             color: var(--white);
-            font-size: 1.3rem;
+            font-size: 20px;
             font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .footer-brand:hover {
+            color: #d9c8f0;
         }
 
         .footer-links {
@@ -554,28 +654,42 @@
         }
 
         .footer-links a {
-            color: #cbd1da;
+            color: #c4ccda;
+            font-size: 13px;
         }
 
         .footer-links a:hover {
-            color: #f2b49d;
+            color: #d9c8f0;
         }
 
+        .footer-copy {
+            color: #8e99ad;
+            font-size: 12px;
+        }
+
+        /* Responsive */
+
         @media (max-width: 991px) {
+            .hero-decoration {
+                right: 5%;
+                width: 115px;
+                height: 115px;
+                font-size: 55px;
+            }
+
             .category-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 16px;
-            }
-
-            .category-card {
-                min-height: 180px;
-                padding: 22px;
             }
         }
 
         @media (max-width: 767px) {
             .hero {
-                padding: 70px 0 65px;
+                padding: 67px 0 65px;
+            }
+
+            .hero-decoration {
+                display: none;
             }
 
             .section {
@@ -583,7 +697,7 @@
             }
 
             .section-heading {
-                align-items: start;
+                align-items: flex-start;
                 flex-direction: column;
             }
 
@@ -596,41 +710,41 @@
                 height: 200px;
             }
 
+            .category-section {
+                padding: 55px 0;
+            }
+
             .cta-box {
                 padding: 30px 23px;
             }
 
             .footer-content {
-                align-items: start !important;
+                align-items: flex-start !important;
                 flex-direction: column;
             }
         }
 
         @media (max-width: 575px) {
-            .category-section {
-                padding: 55px 0;
-            }
-
             .category-grid {
                 grid-template-columns: 1fr;
                 gap: 14px;
             }
 
             .category-card {
-                min-height: 155px;
-                padding: 22px;
+                min-height: 160px;
             }
 
-            .category-section .section-title {
-                font-size: 29px;
+            .navbar-brand {
+                font-size: 1.2rem;
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .category-card,
-            .category-card::after,
-            .category-arrow {
-                transition: none;
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition: none !important;
             }
         }
     </style>
@@ -642,8 +756,16 @@
 
 <nav class="navbar navbar-expand-lg">
     <div class="container">
+
         <a class="navbar-brand" th:href="@{/}">
-            <i class="bi bi-journal-richtext me-2"></i>BlogSpace
+            <span class="brand-icon">
+                <i class="bi bi-journal-code"></i>
+            </span>
+
+            <span>
+                BYTE SPACE
+                <span class="brand-subtitle">IDEAS. KNOWLEDGE. COMMUNITY.</span>
+            </span>
         </a>
 
         <button class="navbar-toggler" type="button"
@@ -657,6 +779,7 @@
 
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto align-items-lg-center">
+
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/}">Home</a>
                 </li>
@@ -668,61 +791,62 @@
                 <li class="nav-item"
                     sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/admin}">
+                        <i class="bi bi-speedometer2 me-1"></i>
                         Admin Dashboard
                     </a>
                 </li>
 
-                <!-- Login: only when logged out -->
                 <li class="nav-item mt-2 mt-lg-0"
                     sec:authorize="isAnonymous()">
-                    <a class="nav-link" th:href="@{/login}">
-                        Login
-                    </a>
+                    <a class="nav-link" th:href="@{/login}">Login</a>
                 </li>
 
-                <!-- Register: only when logged out -->
                 <li class="nav-item mt-2 mt-lg-0"
                     sec:authorize="isAnonymous()">
                     <a class="btn-primary-custom ms-lg-2"
                        th:href="@{/register}">
                         Get Started
+                        <i class="bi bi-arrow-right"></i>
                     </a>
                 </li>
 
-                <!-- Logout: only when logged in -->
                 <li class="nav-item mt-2 mt-lg-0"
                     sec:authorize="isAuthenticated()">
-                    <form th:action="@{/logout}"
-                          method="post"
-                          class="ms-lg-2">
+                    <form th:action="@{/logout}" method="post" class="ms-lg-2">
                         <button type="submit" class="btn-outline-custom">
-                            <i class="bi bi-box-arrow-right me-1"></i>
+                            <i class="bi bi-box-arrow-right"></i>
                             Logout
                         </button>
                     </form>
                 </li>
+
             </ul>
         </div>
     </div>
 </nav>
 
 <!-- Hero -->
+
 <header class="hero">
     <div class="container hero-content">
+
         <span class="hero-label">
-            <i class="bi bi-stars me-1"></i> Ideas worth sharing
+            <i class="bi bi-stars"></i>
+            Ideas worth sharing
         </span>
 
-        <h1>Read, Learn &amp; Share Amazing Stories.</h1>
+        <h1>Explore Ideas.<br>Expand Your Knowledge.</h1>
 
         <p>
-            Discover useful articles, explore new ideas, and learn something
-            new every day. Your next favorite read starts here.
+            Welcome to BYTE SPACE — discover useful articles, explore
+            new perspectives, and learn something new with every read.
         </p>
 
         <div class="d-flex flex-wrap gap-3">
+
             <a class="btn-primary-custom" th:href="@{/blog}">
-                Explore Articles <i class="bi bi-arrow-right ms-1"></i>
+                Explore Articles
+                <i class="bi bi-arrow-right"></i>
             </a>
 
             <a class="btn-outline-custom"
@@ -730,24 +854,31 @@
                sec:authorize="isAnonymous()">
                 Join Our Community
             </a>
+
         </div>
+    </div>
+
+    <div class="hero-decoration d-none d-lg-flex">
+        <i class="bi bi-journal-richtext"></i>
     </div>
 </header>
 
 <!-- Search -->
+
 <section class="search-section">
     <div class="container">
+
         <div class="search-box">
             <form th:action="@{/blog}" method="get">
+
                 <div class="row g-3 align-items-end">
+
                     <div class="col-lg-9">
                         <label for="searchQuery">Find your next read</label>
 
                         <div class="input-group">
-                            <span class="input-group-text bg-white border-end-0"
-                                  style="border-color: var(--border);">
-                                <i class="bi bi-search"
-                                   style="color: var(--terracotta);"></i>
+                            <span class="input-group-text search-icon">
+                                <i class="bi bi-search"></i>
                             </span>
 
                             <input id="searchQuery"
@@ -762,29 +893,35 @@
                     <div class="col-lg-3">
                         <button type="submit"
                                 class="btn-primary-custom w-100">
+                            <i class="bi bi-search"></i>
                             Search Articles
                         </button>
                     </div>
+
                 </div>
             </form>
         </div>
+
     </div>
 </section>
 
 <!-- Latest Articles -->
+
 <section class="section">
     <div class="container">
+
         <div class="section-heading">
             <div>
                 <div class="section-eyebrow">Fresh from the blog</div>
                 <h2 class="section-title">Latest Articles</h2>
                 <p class="section-description">
-                    Explore ideas, tutorials, and stories from our community.
+                    Discover tutorials, useful ideas, and stories from our community.
                 </p>
             </div>
 
             <a class="btn-outline-custom" th:href="@{/blog}">
-                View All Articles <i class="bi bi-arrow-up-right ms-1"></i>
+                View All Articles
+                <i class="bi bi-arrow-up-right"></i>
             </a>
         </div>
 
@@ -806,31 +943,32 @@
 
                     <a class="blog-image-placeholder"
                        th:if="${blog.image == null or blog.image.length == 0}"
-                       th:href="@{/blog/{id}(id=${blog.id})}">
+                       th:href="@{/blog/{id}(id=${blog.id})}"
+                       aria-label="Read article">
                         <i class="bi bi-journal-text"></i>
                     </a>
 
                     <div class="blog-card-body">
 
                         <div class="blog-meta">
-                    <span th:if="${blog.publishedAt != null}">
-                        <i class="bi bi-calendar3"></i>
-                        <span th:text="${#temporals.format(blog.publishedAt, 'dd MMM yyyy')}">
-                            12 Oct 2026
-                        </span>
-                    </span>
+
+                            <span th:if="${blog.publishedAt != null}">
+                                <i class="bi bi-calendar3"></i>
+                                <span th:text="${#temporals.format(blog.publishedAt, 'dd MMM yyyy')}">
+                                    12 Oct 2026
+                                </span>
+                            </span>
 
                             <span th:if="${blog.author != null}">
-                        <i class="bi bi-person"></i>
-                        <span th:text="${blog.author}">
-                            Author
-                        </span>
-                    </span>
+                                <i class="bi bi-person"></i>
+                                <span th:text="${blog.author}">Author</span>
+                            </span>
 
                             <span th:if="${blog.views != null}">
-                        <i class="bi bi-eye"></i>
-                        <span th:text="${blog.views}">0</span> views
-                    </span>
+                                <i class="bi bi-eye"></i>
+                                <span th:text="${blog.views}">0</span> views
+                            </span>
+
                         </div>
 
                         <h3 class="blog-title">
@@ -849,40 +987,50 @@
                         <p class="blog-excerpt"
                            th:if="${blog.excerpt == null or #strings.isEmpty(blog.excerpt)}"
                            th:text="${#strings.abbreviate(blog.content, 150)}">
-                            Article content preview
+                            Article preview
                         </p>
 
                         <a class="read-more"
                            th:href="@{/blog/{id}(id=${blog.id})}">
-                            Read Article <i class="bi bi-arrow-right ms-1"></i>
+                            Read Article
+                            <i class="bi bi-arrow-right"></i>
                         </a>
 
                     </div>
                 </article>
+
             </div>
         </div>
 
         <div class="empty-state"
              th:if="${blogs == null or blogs.isEmpty()}">
+
             <i class="bi bi-journal-x"></i>
+
             <h3>No articles found</h3>
+
             <p class="mb-4">
                 There are no published articles to display right now.
                 Please check back later.
             </p>
+
             <a class="btn-primary-custom" th:href="@{/blog}">
                 Browse Articles
+                <i class="bi bi-arrow-right"></i>
             </a>
         </div>
+
     </div>
 </section>
 
 <!-- Categories -->
-<section class="section category-section">
+
+<section class="category-section">
     <div class="container">
+
         <div class="section-heading">
             <div>
-                <div class="section-eyebrow">EXPLORE YOUR INTERESTS</div>
+                <div class="section-eyebrow">Explore your interests</div>
                 <h2 class="section-title">Browse by Topic</h2>
                 <p class="section-description">
                     Find articles that match what you want to learn.
@@ -891,6 +1039,7 @@
         </div>
 
         <div class="category-grid">
+
             <a th:each="category : ${categories}"
                th:href="@{/blog(categoryIds=${category.id})}"
                class="category-card">
@@ -915,52 +1064,76 @@
                             or category.description.isBlank()}">
                     Explore articles in this topic.
                 </p>
+
             </a>
 
             <div class="category-empty"
                  th:if="${categories == null or #lists.isEmpty(categories)}">
+                <i class="bi bi-grid me-2"></i>
                 No categories available yet.
             </div>
+
         </div>
     </div>
 </section>
 
 <!-- Call to Action -->
+
 <section class="cta-section">
     <div class="container">
+
         <div class="cta-box">
-            <div class="row align-items-center g-4">
-                <div class="col-lg-8">
-                    <h2>Have a story worth sharing?</h2>
-                    <p class="mb-lg-0">
-                        Become part of our community and start exploring
-                        ideas with other curious readers.
-                    </p>
+            <div class="cta-content">
+
+                <div class="row align-items-center g-4">
+
+                    <div class="col-lg-8">
+                        <h2>Have a story worth sharing?</h2>
+                        <p>
+                            Join BYTE SPACE and become part of a community
+                            built around ideas, learning, and knowledge.
+                        </p>
+                    </div>
+
+                    <div class="col-lg-4 text-lg-end"
+                         sec:authorize="isAnonymous()">
+                        <a class="btn" th:href="@{/register}">
+                            Join the Community
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 text-lg-end"
+                         sec:authorize="isAuthenticated()">
+                        <a class="btn" th:href="@{/blog}">
+                            Explore Articles
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+
                 </div>
 
-                <div class="col-lg-4 text-lg-end">
-                    <a class="btn"
-                       th:href="@{/register}">
-                        Join the Community
-                        <i class="bi bi-arrow-right ms-1"></i>
-                    </a>
-                </div>
             </div>
         </div>
+
     </div>
 </section>
 
 <!-- Footer -->
+
 <footer>
     <div class="container">
+
         <div class="footer-content d-flex justify-content-between
                     align-items-center flex-wrap gap-4">
 
             <div>
                 <a class="footer-brand" th:href="@{/}">
-                    <i class="bi bi-journal-richtext me-2"></i>BlogSpace
+                    <i class="bi bi-journal-code me-2"></i>
+                    BYTE SPACE
                 </a>
-                <p class="mt-2 mb-0">
+
+                <p class="mt-2 mb-0 small">
                     Ideas, knowledge, and stories worth sharing.
                 </p>
             </div>
@@ -975,13 +1148,15 @@
                 <a th:href="@{/register}"
                    sec:authorize="isAnonymous()">Register</a>
             </div>
+
         </div>
 
-        <hr class="my-4" style="border-color: #526074;">
+        <hr class="my-4" style="border-color: #35415a;">
 
-        <p class="text-center mb-0 small">
-            &copy; 2026 BlogSpace. All rights reserved.
+        <p class="footer-copy text-center mb-0">
+            &copy; 2026 BYTE SPACE. All rights reserved.
         </p>
+
     </div>
 </footer>
 
