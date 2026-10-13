@@ -139,6 +139,20 @@
             box-shadow: 0 0 0 .2rem rgba(200, 117, 86, .15);
         }
 
+        input[type="file"].form-control {
+            padding: 9px;
+        }
+
+        input[type="file"]::file-selector-button {
+            margin-right: 12px;
+            padding: 7px 12px;
+            border: 0;
+            border-radius: 7px;
+            background: var(--sage);
+            color: var(--navy);
+            cursor: pointer;
+        }
+
         textarea.form-control {
             min-height: 240px;
             resize: vertical;
@@ -149,6 +163,18 @@
             margin-top: 7px;
             color: var(--muted);
             font-size: .88rem;
+        }
+
+        .image-preview {
+            display: none;
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            margin-top: 15px;
+            padding: 8px;
+            background: #fcfbf8;
+            border: 1px solid var(--border);
+            border-radius: 12px;
         }
 
         .selection-panel {
@@ -268,9 +294,9 @@
 
 <header class="topbar">
     <div class="container d-flex justify-content-between align-items-center">
-        <a href="/blog" class="brand">BYTE <span>SPACE</span></a>
+        <a th:href="@{/}" class="brand">BYTE <span>SPACE</span></a>
 
-        <a href="/admin/blogs" class="topbar-link">
+        <a th:href="@{/admin/blogs}" class="topbar-link">
             <i class="bi bi-speedometer2 me-1"></i>
             Admin Panel
         </a>
@@ -279,7 +305,7 @@
 
 <main class="page-wrapper">
 
-    <a href="/admin/blogs" class="back-link">
+    <a th:href="@{/admin/blogs}" class="back-link">
         <i class="bi bi-arrow-left me-1"></i>
         Back to Manage Blogs
     </a>
@@ -298,11 +324,11 @@
 
             <form th:action="@{/admin/blogs/update}"
                   th:object="${blog}"
-                  method="post">
+                  method="post"
+                  enctype="multipart/form-data">
 
                 <input type="hidden" th:field="*{id}">
 
-                <!-- Basic information -->
                 <h2 class="section-heading">
                     <i class="bi bi-file-earmark-text me-2"></i>
                     Basic Information
@@ -356,17 +382,34 @@
                     </div>
 
                     <div class="col-12">
-                        <label for="image" class="form-label">Cover Image URL</label>
-                        <input type="url"
-                               id="image"
+                        <label for="imageFile" class="form-label">Cover Image</label>
+
+                        <div th:if="${blog.image != null and blog.image.length > 0}">
+                            <p class="help-text">Current image:</p>
+                            <img th:src="@{/blogs/{id}/image(id=${blog.id})}"
+                                 class="image-preview"
+                                 style="display: block;"
+                                 alt="Current blog image">
+                        </div>
+
+                        <input type="file"
+                               id="imageFile"
+                               name="imageFile"
                                class="form-control"
-                               th:field="*{image}"
-                               placeholder="https://example.com/image.jpg">
+                               accept="image/png,image/jpeg">
+
+                        <div class="help-text">
+                            Choose a new JPG, JPEG or PNG image only if you want to replace the current one.
+                            Leave this field empty to keep the existing image.
+                        </div>
+
+                        <img id="imagePreview"
+                             class="image-preview"
+                             alt="New selected image preview">
                     </div>
 
                 </div>
 
-                <!-- Article content -->
                 <h2 class="section-heading">
                     <i class="bi bi-card-text me-2"></i>
                     Article Content
@@ -381,7 +424,6 @@
                               required></textarea>
                 </div>
 
-                <!-- Categories -->
                 <h2 class="section-heading">
                     <i class="bi bi-folder2-open me-2"></i>
                     Categories
@@ -410,7 +452,6 @@
                     </div>
                 </div>
 
-                <!-- Tags -->
                 <h2 class="section-heading">
                     <i class="bi bi-tags me-2"></i>
                     Tags
@@ -439,7 +480,6 @@
                     </div>
                 </div>
 
-                <!-- Publishing information -->
                 <h2 class="section-heading">
                     <i class="bi bi-info-circle me-2"></i>
                     Publishing Information
@@ -462,7 +502,6 @@
                     </div>
                 </div>
 
-                <!-- Actions -->
                 <div class="form-actions">
 
                     <button type="submit" class="btn btn-save">
@@ -470,7 +509,7 @@
                         Update Blog
                     </button>
 
-                    <a href="/admin/blogs" class="btn-cancel">
+                    <a th:href="@{/admin/blogs}" class="btn-cancel">
                         <i class="bi bi-x-circle me-2"></i>
                         Cancel
                     </a>
@@ -482,6 +521,32 @@
         </div>
     </div>
 </main>
+
+<script>
+    const imageInput = document.getElementById('imageFile');
+    const imagePreview = document.getElementById('imagePreview');
+
+    imageInput.addEventListener('change', function () {
+        const file = this.files[0];
+
+        if (!file) {
+            imagePreview.removeAttribute('src');
+            imagePreview.style.display = 'none';
+            return;
+        }
+
+        if (!['image/jpeg', 'image/png'].includes(file.type)) {
+            alert('Please select a JPG, JPEG or PNG image.');
+            this.value = '';
+            imagePreview.removeAttribute('src');
+            imagePreview.style.display = 'none';
+            return;
+        }
+
+        imagePreview.src = URL.createObjectURL(file);
+        imagePreview.style.display = 'block';
+    });
+</script>
 
 </body>
 </html>

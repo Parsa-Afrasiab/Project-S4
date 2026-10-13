@@ -747,19 +747,18 @@
 
 
     <div class="cover-wrapper"
-         th:if="${blog.image != null and !blog.image.isEmpty()}">
+         th:if="${blog.image != null and blog.image.length > 0}">
         <img class="article-cover"
              th:alt="${blog.title}"
-             th:src="${blog.image}">
+             th:src="@{/blogs/{id}/image(id=${blog.id})}">
     </div>
 
     <div class="cover-wrapper"
-         th:if="${blog.image == null or blog.image.isEmpty()}">
+         th:if="${blog.image == null or blog.image.length == 0}">
         <div class="cover-placeholder">
             <i class="bi bi-journal-richtext"></i>
         </div>
     </div>
-
 
     <article class="article-card">
 

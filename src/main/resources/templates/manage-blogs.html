@@ -407,15 +407,17 @@
                     </td>
 
                     <td>
-                        <img th:if="${blog.image != null and !#strings.isEmpty(blog.image)}"
-                             th:src="${blog.image}"
+
+                        <img th:if="${blog.image != null and blog.image.length > 0}"
+                             th:src="@{/blogs/{id}/image(id=${blog.id})}"
                              th:alt="${blog.title}"
                              class="blog-image">
 
-                        <span th:if="${blog.image == null or #strings.isEmpty(blog.image)}"
+                        <span th:if="${blog.image == null or blog.image.length == 0}"
                               class="no-image">
                             <i class="bi bi-image"></i>
                         </span>
+
                     </td>
 
                     <td>

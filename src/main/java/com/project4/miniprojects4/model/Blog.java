@@ -22,7 +22,10 @@ public class Blog {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    private String image;
+    @Column(columnDefinition = "bytea")
+    private byte[] image;
+
+    private String imageContentType;
 
     private boolean approved;
 
@@ -70,7 +73,7 @@ public class Blog {
     public Blog() {
     }
 
-    public Blog(Long id, String title, String content, String image, boolean approved) {
+    public Blog(Long id, String title, String content, byte[] image, boolean approved) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -102,11 +105,11 @@ public class Blog {
         this.content = content;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
@@ -190,4 +193,11 @@ public class Blog {
         this.tags = tags;
     }
 
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+    }
 }

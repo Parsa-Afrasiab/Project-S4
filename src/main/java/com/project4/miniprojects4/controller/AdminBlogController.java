@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.project4.miniprojects4.service.CategoryService;
 import com.project4.miniprojects4.service.TagService;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,14 +56,21 @@ public class AdminBlogController {
 
 
     @PostMapping("/save")
-    public String saveBlog(@ModelAttribute Blog blog,
-                           @RequestParam(required = false) List<Long> categories,
-                           @RequestParam(required = false) List<Long> tags) {
+    public String saveBlog(
+            @ModelAttribute Blog blog,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+            @RequestParam(required = false) List<Long> categories,
+            @RequestParam(required = false) List<Long> tags) throws IOException {
 
         blog.setId(null);
         blog.setApproved(false);
         blog.setStatus(com.project4.miniprojects4.model.BlogStatus.DRAFT);
         blog.setPublishedAt(null);
+
+        if (imageFile != null && !imageFile.isEmpty()) {
+            blog.setImage(imageFile.getBytes());
+            blog.setImageContentType(imageFile.getContentType());
+        }
 
         if (categories != null) {
             blog.setCategories(categories.stream()
@@ -114,9 +123,11 @@ public class AdminBlogController {
     }
 
     @PostMapping("/update")
-    public String updateBlog(@ModelAttribute Blog formBlog,
-                             @RequestParam(required = false) List<Long> categories,
-                             @RequestParam(required = false) List<Long> tags) {
+    public String updateBlog(
+            @ModelAttribute Blog formBlog,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+            @RequestParam(required = false) List<Long> categories,
+            @RequestParam(required = false) List<Long> tags) throws IOException {
 
         Blog blog = blogService.getBlogById(formBlog.getId());
 
@@ -128,8 +139,11 @@ public class AdminBlogController {
         blog.setAuthor(formBlog.getAuthor());
         blog.setSlug(formBlog.getSlug());
         blog.setExcerpt(formBlog.getExcerpt());
-        blog.setImage(formBlog.getImage());
         blog.setContent(formBlog.getContent());
+        if (imageFile != null && !imageFile.isEmpty()) {
+            blog.setImage(imageFile.getBytes());
+            blog.setImageContentType(imageFile.getContentType());
+        }
 
         if (categories != null) {
             blog.setCategories(new ArrayList<>(

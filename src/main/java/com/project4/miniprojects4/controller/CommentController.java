@@ -46,8 +46,11 @@ public class CommentController {
             return "redirect:/";
         }
 
-        User user = userService.findByEmail(authentication.getName());
+        User user = userService.findByUsername(authentication.getName());
 
+        if (user == null) {
+            user = userService.findByEmail(authentication.getName());
+        }
         if (user == null) {
             return "redirect:/login";
         }

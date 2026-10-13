@@ -795,40 +795,42 @@
                  th:each="blog : ${blogs}">
 
                 <article class="blog-card">
+
                     <a th:href="@{/blog/{id}(id=${blog.id})}"
-                       th:if="${blog.image != null and !#strings.isEmpty(blog.image)}">
+                       th:if="${blog.image != null and blog.image.length > 0}">
                         <img class="blog-image"
-                             th:src="${blog.image}"
+                             th:src="@{/blogs/{id}/image(id=${blog.id})}"
                              th:alt="${blog.title}"
                              loading="lazy">
                     </a>
 
                     <a class="blog-image-placeholder"
-                       th:if="${blog.image == null or #strings.isEmpty(blog.image)}"
+                       th:if="${blog.image == null or blog.image.length == 0}"
                        th:href="@{/blog/{id}(id=${blog.id})}">
                         <i class="bi bi-journal-text"></i>
                     </a>
 
                     <div class="blog-card-body">
+
                         <div class="blog-meta">
-                            <span th:if="${blog.publishedAt != null}">
-                                <i class="bi bi-calendar3"></i>
-                                <span th:text="${#temporals.format(blog.publishedAt, 'dd MMM yyyy')}">
-                                    12 Oct 2026
-                                </span>
-                            </span>
+                    <span th:if="${blog.publishedAt != null}">
+                        <i class="bi bi-calendar3"></i>
+                        <span th:text="${#temporals.format(blog.publishedAt, 'dd MMM yyyy')}">
+                            12 Oct 2026
+                        </span>
+                    </span>
 
                             <span th:if="${blog.author != null}">
-                                <i class="bi bi-person"></i>
-                                <span th:text="${blog.author}">
-                                    Author
-                                </span>
-                            </span>
+                        <i class="bi bi-person"></i>
+                        <span th:text="${blog.author}">
+                            Author
+                        </span>
+                    </span>
 
                             <span th:if="${blog.views != null}">
-                                <i class="bi bi-eye"></i>
-                                <span th:text="${blog.views}">0</span> views
-                            </span>
+                        <i class="bi bi-eye"></i>
+                        <span th:text="${blog.views}">0</span> views
+                    </span>
                         </div>
 
                         <h3 class="blog-title">
@@ -854,6 +856,7 @@
                            th:href="@{/blog/{id}(id=${blog.id})}">
                             Read Article <i class="bi bi-arrow-right ms-1"></i>
                         </a>
+
                     </div>
                 </article>
             </div>
