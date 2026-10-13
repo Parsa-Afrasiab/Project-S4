@@ -1,6 +1,7 @@
 package com.project4.miniprojects4.controller;
 
 import com.project4.miniprojects4.model.Blog;
+import com.project4.miniprojects4.model.BlogStatus;
 import com.project4.miniprojects4.service.BlogService;
 import com.project4.miniprojects4.service.CategoryService;
 import com.project4.miniprojects4.service.CommentService;
@@ -35,6 +36,10 @@ public class BlogController {
         Blog blog = blogService.getBlogById(id);
 
         if (blog == null) {
+            return "redirect:/blog";
+        }
+        if (!blog.isApproved()
+                || blog.getStatus() != BlogStatus.PUBLISHED) {
             return "redirect:/blog";
         }
 

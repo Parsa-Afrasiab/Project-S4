@@ -58,17 +58,22 @@ public class AdminBlogController {
                            @RequestParam(required = false) List<Long> categories,
                            @RequestParam(required = false) List<Long> tags) {
 
+        blog.setId(null);
         blog.setApproved(false);
+        blog.setStatus(com.project4.miniprojects4.model.BlogStatus.DRAFT);
+        blog.setPublishedAt(null);
 
         if (categories != null) {
             blog.setCategories(categories.stream()
                     .map(id -> categoryService.getCategoryById(id))
+                    .filter(category -> category != null)
                     .toList());
         }
 
         if (tags != null) {
             blog.setTags(tags.stream()
                     .map(id -> tagService.getTagById(id))
+                    .filter(tag -> tag != null)
                     .toList());
         }
 
@@ -87,7 +92,7 @@ public class AdminBlogController {
 
     }
 
-    @GetMapping("/approve/{id}")
+    @PostMapping("/approve/{id}")
     public String approveBlog(@PathVariable Long id) {
 
         blogService.approve(id);

@@ -441,12 +441,19 @@
                                 Edit
                             </a>
 
-                            <a th:if="${not blog.approved}"
-                               th:href="@{/admin/blogs/approve/{id}(id=${blog.id})}"
-                               class="action-btn approve-btn">
-                                <i class="bi bi-check-lg"></i>
-                                Approve
-                            </a>
+
+                            <form th:if="${not blog.approved}"
+                                  th:action="@{/admin/blogs/approve/{id}(id=${blog.id})}"
+                                  method="post"
+                                  style="display: inline;">
+
+                                <button type="submit" class="action-btn approve-btn">
+                                    <i class="bi bi-check-lg"></i>
+                                    Approve
+                                </button>
+
+                            </form>
+
 
                             <a th:href="@{/admin/blogs/delete/{id}(id=${blog.id})}"
                                class="action-btn delete-btn"
