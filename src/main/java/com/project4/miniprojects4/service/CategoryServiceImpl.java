@@ -3,6 +3,8 @@ package com.project4.miniprojects4.service;
 import com.project4.miniprojects4.model.Category;
 import com.project4.miniprojects4.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
+import com.project4.miniprojects4.model.Blog;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -36,7 +38,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public void deleteCategory(Long id) {
-        categoryRepository.deleteById(id);
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Category not found: " + id));
+
+        for (Blog blog : category.getBlogs()) {
+            blog.getCategories().removeIf(
+                    c -> c.getId().equals(id)
+            );
+        }
+
+        categoryRepository.delete(category);
     }
 }
