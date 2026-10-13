@@ -158,6 +158,11 @@
             background: #eaf0f8;
         }
 
+        .icon-user {
+            color: #8265a7;
+            background: #f0eafa;
+        }
+
         .menu-title {
             font-weight: 750;
             font-size: 15px;
@@ -323,6 +328,19 @@
                 <div>
                     <div class="menu-title">Manage Tags</div>
                     <p class="menu-description">Manage article tags</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Manage Users -->
+        <div class="col-12 col-md-6 col-lg-3">
+            <a th:href="@{/admin/users}" class="menu-card">
+                <div class="menu-icon icon-user">
+                    <i class="bi bi-people"></i>
+                </div>
+                <div>
+                    <div class="menu-title">Manage Users</div>
+                    <p class="menu-description">Activate and deactivate accounts</p>
                 </div>
             </a>
         </div>
