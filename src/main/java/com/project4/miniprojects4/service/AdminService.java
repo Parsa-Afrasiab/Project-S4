@@ -1,4 +1,3 @@
-
 package com.project4.miniprojects4.service;
 
 public interface AdminService {
@@ -9,4 +8,7 @@ public interface AdminService {
 
     long getCommentCount();
 
+    void enableUser(Long id);
+
+    void disableUser(Long id);
 }

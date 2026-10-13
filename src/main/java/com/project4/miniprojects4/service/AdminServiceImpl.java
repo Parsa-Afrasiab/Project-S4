@@ -1,6 +1,7 @@
 
 package com.project4.miniprojects4.service;
 
+import com.project4.miniprojects4.model.User;
 import com.project4.miniprojects4.repository.BlogRepository;
 import com.project4.miniprojects4.repository.CommentRepository;
 import com.project4.miniprojects4.repository.UserRepository;
@@ -35,5 +36,23 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public long getCommentCount() {
         return commentRepository.count();
+    }
+
+    @Override
+    public void enableUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setEnabled(true);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void disableUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setEnabled(false);
+        userRepository.save(user);
     }
 }
