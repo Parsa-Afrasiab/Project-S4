@@ -33,18 +33,38 @@ public class AuthController {
         return "register";
     }
 
-    @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user) {
 
-        if (userService.findByEmail(user.getEmail()) != null) {
+    @PostMapping("/register")
+    public String registerUser(
+            @org.springframework.web.bind.annotation.RequestParam String fullName,
+            @org.springframework.web.bind.annotation.RequestParam String username,
+            @org.springframework.web.bind.annotation.RequestParam String email,
+            @org.springframework.web.bind.annotation.RequestParam String password,
+            @org.springframework.web.bind.annotation.RequestParam String confirmPassword) {
+
+        if (userService.findByEmail(email) != null) {
             return "redirect:/register?error=email";
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (userService.findByUsername(username) != null) {
+            return "redirect:/register?error=username";
+        }
+
+        if (!password.equals(confirmPassword)) {
+            return "redirect:/register?error=password";
+        }
+
+        User user = new User();
+        user.setFullName(fullName);
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
         user.setRole(Role.USER);
+        user.setEnabled(true);
 
         userService.save(user);
 
         return "redirect:/login?registered";
     }
+
 }

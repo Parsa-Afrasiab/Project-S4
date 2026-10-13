@@ -16,6 +16,9 @@ public class User {
     @Column(nullable = false)
     private String fullName;
 
+    @Column(nullable = false, unique = true, length = 50)
+    private String username;
+
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -23,6 +26,7 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
 
     @CreationTimestamp
@@ -35,9 +39,11 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String fullName, String email, String password, Role role) {
+    public User(Long id, String fullName, String username,
+                String email, String password, Role role) {
         this.id = id;
         this.fullName = fullName;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
@@ -97,5 +103,13 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
