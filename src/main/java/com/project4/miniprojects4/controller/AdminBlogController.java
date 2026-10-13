@@ -125,6 +125,9 @@ public class AdminBlogController {
         }
 
         blog.setTitle(formBlog.getTitle());
+        blog.setAuthor(formBlog.getAuthor());
+        blog.setSlug(formBlog.getSlug());
+        blog.setExcerpt(formBlog.getExcerpt());
         blog.setImage(formBlog.getImage());
         blog.setContent(formBlog.getContent());
 
