@@ -2,211 +2,390 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Admin Panel</title>
-
+    <title>Admin Dashboard | BYTE SPACE</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+          rel="stylesheet">
 
     <style>
-
-        body{
-
-            background:#f5f5f5;
-
+        :root {
+            --cream: #f7f4ee;
+            --navy: #202c3c;
+            --navy-light: #2d3b4f;
+            --terracotta: #bc735c;
+            --sage: #778875;
+            --text: #343a40;
+            --muted: #858585;
+            --border: #e9e2d8;
+            --white: #ffffff;
         }
 
-
-        .admin-card{
-
-            border:none;
-            border-radius:15px;
-            box-shadow:0 5px 15px rgba(0,0,0,.1);
-
+        * {
+            box-sizing: border-box;
         }
 
-
-        .number{
-
-            font-size:35px;
-            font-weight:bold;
-
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--text);
+            font-family: Arial, sans-serif;
         }
 
-
-        .menu a{
-
-            text-decoration:none;
-            margin-right:10px;
-
+        .navbar {
+            background: var(--navy);
+            padding: 18px 0;
+            box-shadow: 0 3px 14px rgba(32, 44, 60, 0.10);
         }
 
+        .navbar-brand {
+            color: var(--white);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+        }
 
+        .navbar-brand span {
+            color: #d89a83;
+        }
+
+        .home-btn {
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 9px;
+            padding: 9px 17px;
+            text-decoration: none;
+            transition: .2s;
+        }
+
+        .home-btn:hover {
+            color: var(--navy);
+            background: var(--white);
+        }
+
+        .dashboard {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 48px 20px 65px;
+        }
+
+        .eyebrow {
+            color: var(--terracotta);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .page-title {
+            color: var(--navy);
+            font-size: clamp(29px, 4vw, 39px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .page-description {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            color: var(--navy);
+            font-size: 18px;
+            font-weight: 750;
+            margin-bottom: 18px;
+        }
+
+        .menu-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            height: 100%;
+            min-height: 105px;
+            padding: 20px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            text-decoration: none;
+            color: var(--navy);
+            transition: transform .2s, box-shadow .2s, border-color .2s;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(32, 44, 60, 0.08);
+            border-color: #d4b5a7;
+            color: var(--navy);
+        }
+
+        .menu-icon {
+            width: 49px;
+            height: 49px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border-radius: 13px;
+            font-size: 22px;
+        }
+
+        .icon-blog {
+            color: var(--terracotta);
+            background: #f7eae4;
+        }
+
+        .icon-comment {
+            color: #94712e;
+            background: #f6efd9;
+        }
+
+        .icon-category {
+            color: var(--sage);
+            background: #eaf0e7;
+        }
+
+        .icon-tag {
+            color: #637a9c;
+            background: #eaf0f8;
+        }
+
+        .menu-title {
+            font-weight: 750;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .menu-description {
+            color: var(--muted);
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .stats-section {
+            margin-top: 42px;
+        }
+
+        .stat-card {
+            height: 100%;
+            padding: 25px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 5px 18px rgba(32, 44, 60, 0.025);
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .stat-icon {
+            width: 43px;
+            height: 43px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 20px;
+        }
+
+        .stat-number {
+            color: var(--navy);
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1.2;
+            overflow-wrap: anywhere;
+        }
+
+        .stat-caption {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 9px;
+        }
+
+        .dashboard-footer {
+            margin-top: 45px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+            text-align: center;
+        }
+
+        @media (max-width: 576px) {
+            .dashboard {
+                padding: 32px 16px 45px;
+            }
+
+            .navbar {
+                padding: 15px 0;
+            }
+
+            .navbar-brand {
+                font-size: 18px;
+            }
+
+            .stat-card {
+                padding: 21px;
+            }
+        }
     </style>
-
 </head>
-
 
 <body>
 
-
-<nav class="navbar navbar-dark bg-dark">
-
-    <div class="container">
-
-        <a class="navbar-brand" href="/">
-
-            Mini Blog Admin
-
+<nav class="navbar">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a class="navbar-brand text-decoration-none" href="/">
+            BYTE <span>SPACE</span>
         </a>
 
-
-        <a href="/" class="btn btn-outline-light">
-
-            Home
-
+        <a href="/" class="home-btn">
+            <i class="bi bi-house-door me-1"></i>
+            View Website
         </a>
-
     </div>
-
 </nav>
 
+<main class="dashboard">
 
+    <div class="eyebrow">Administration</div>
 
-<div class="container mt-5">
+    <h1 class="page-title">Admin Dashboard</h1>
 
+    <p class="page-description">
+        Manage your content, review comments, and keep BYTE SPACE organized.
+    </p>
 
-    <h2 class="mb-4">
+    <h2 class="section-title">Content Management</h2>
 
-        Admin Panel
+    <div class="row g-3">
 
-    </h2>
+        <div class="col-12 col-md-6 col-lg-3">
+            <a href="/admin/blogs" class="menu-card">
+                <div class="menu-icon icon-blog">
+                    <i class="bi bi-journal-richtext"></i>
+                </div>
+                <div>
+                    <div class="menu-title">Manage Blogs</div>
+                    <p class="menu-description">Create and review articles</p>
+                </div>
+            </a>
+        </div>
 
+        <div class="col-12 col-md-6 col-lg-3">
+            <a href="/admin/comments" class="menu-card">
+                <div class="menu-icon icon-comment">
+                    <i class="bi bi-chat-square-text"></i>
+                </div>
+                <div>
+                    <div class="menu-title">Manage Comments</div>
+                    <p class="menu-description">Review reader comments</p>
+                </div>
+            </a>
+        </div>
 
+        <div class="col-12 col-md-6 col-lg-3">
+            <a href="/admin/categories" class="menu-card">
+                <div class="menu-icon icon-category">
+                    <i class="bi bi-collection"></i>
+                </div>
+                <div>
+                    <div class="menu-title">Categories</div>
+                    <p class="menu-description">Organize blog topics</p>
+                </div>
+            </a>
+        </div>
 
-    <div class="menu mb-4">
-
-        <a href="/admin/blogs" class="btn btn-primary mb-2">
-            Manage Blogs
-        </a>
-
-        <a href="/admin/comments" class="btn btn-warning mb-2">
-            Manage Comments
-        </a>
-
-        <a href="/admin/categories" class="btn btn-success mb-2">
-            Manage Categories
-        </a>
-
-        <a href="/admin/tags" class="btn btn-info mb-2">
-            Manage Tags
-        </a>
+        <div class="col-12 col-md-6 col-lg-3">
+            <a href="/admin/tags" class="menu-card">
+                <div class="menu-icon icon-tag">
+                    <i class="bi bi-tags"></i>
+                </div>
+                <div>
+                    <div class="menu-title">Manage Tags</div>
+                    <p class="menu-description">Manage article tags</p>
+                </div>
+            </a>
+        </div>
 
     </div>
 
+    <section class="stats-section">
 
+        <h2 class="section-title">Website Overview</h2>
 
+        <div class="row g-3">
 
-    <div class="row g-4">
+            <div class="col-12 col-md-4">
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-label">Registered Users</span>
+                        <div class="stat-icon icon-category">
+                            <i class="bi bi-people"></i>
+                        </div>
+                    </div>
 
-
-        <div class="col-md-4">
-
-
-            <div class="card admin-card p-4 text-center">
-
-
-                <h5>
-
-                    Users
-
-                </h5>
-
-
-                <div class="number text-primary"
-                     th:text="${userCount}">
-
-                    0
-
+                    <div class="stat-number" th:text="${userCount}">0</div>
+                    <div class="stat-caption">Total registered accounts</div>
                 </div>
-
-
             </div>
 
+            <div class="col-12 col-md-4">
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-label">Total Blogs</span>
+                        <div class="stat-icon icon-blog">
+                            <i class="bi bi-file-earmark-text"></i>
+                        </div>
+                    </div>
+
+                    <div class="stat-number" th:text="${blogCount}">0</div>
+                    <div class="stat-caption">Articles in the system</div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-label">Total Comments</span>
+                        <div class="stat-icon icon-comment">
+                            <i class="bi bi-chat-dots"></i>
+                        </div>
+                    </div>
+
+                    <div class="stat-number" th:text="${commentCount}">0</div>
+                    <div class="stat-caption">Comments submitted by readers</div>
+                </div>
+            </div>
 
         </div>
 
+    </section>
 
+    <footer class="dashboard-footer">
+        BYTE SPACE · Admin Dashboard
+    </footer>
 
-        <div class="col-md-4">
-
-
-            <div class="card admin-card p-4 text-center">
-
-
-                <h5>
-
-                    Blogs
-
-                </h5>
-
-
-                <div class="number text-success"
-                     th:text="${blogCount}">
-
-                    0
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-
-
-
-        <div class="col-md-4">
-
-
-            <div class="card admin-card p-4 text-center">
-
-
-                <h5>
-
-                    Comments
-
-                </h5>
-
-
-                <div class="number text-danger"
-                     th:text="${commentCount}">
-
-                    0
-
-                </div>
-
-
-            </div>
-
-
-        </div>
-
-
-    </div>
-
-
-</div>
-
-
+</main>
 
 </body>
-
 </html>
