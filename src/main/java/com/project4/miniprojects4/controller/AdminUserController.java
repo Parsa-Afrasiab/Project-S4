@@ -36,9 +36,23 @@ public class AdminUserController {
         return "redirect:/admin/users";
     }
 
+
     @PostMapping("/{id}/disable")
-    public String disableUser(@PathVariable Long id) {
-        adminService.disableUser(id);
+    public String disableUser(
+            @PathVariable Long id,
+            org.springframework.security.core.Authentication authentication,
+            org.springframework.web.servlet.mvc.support.RedirectAttributes redirectAttributes) {
+
+        try {
+            adminService.disableUser(id, authentication.getName());
+            redirectAttributes.addFlashAttribute(
+                    "successMessage", "User has been disabled successfully.");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute(
+                    "errorMessage", e.getMessage());
+        }
+
         return "redirect:/admin/users";
     }
+
 }

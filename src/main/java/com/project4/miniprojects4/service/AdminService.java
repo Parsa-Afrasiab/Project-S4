@@ -10,5 +10,5 @@ public interface AdminService {
 
     void enableUser(Long id);
 
-    void disableUser(Long id);
+    void disableUser(Long id, String currentUsername);
 }

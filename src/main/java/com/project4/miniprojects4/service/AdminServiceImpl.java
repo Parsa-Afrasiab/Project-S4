@@ -1,6 +1,7 @@
 
 package com.project4.miniprojects4.service;
 
+import com.project4.miniprojects4.model.Role;
 import com.project4.miniprojects4.model.User;
 import com.project4.miniprojects4.repository.BlogRepository;
 import com.project4.miniprojects4.repository.CommentRepository;
@@ -47,12 +48,32 @@ public class AdminServiceImpl implements AdminService {
         userRepository.save(user);
     }
 
+
     @Override
-    public void disableUser(Long id) {
+    public void disableUser(Long id, String currentUsername) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (user.getUsername().equals(currentUsername)) {
+            throw new IllegalArgumentException(
+                    "You cannot disable your own account");
+        }
+
+        if (user.getRole() == Role.ADMIN && user.isEnabled()) {
+
+            long activeAdmins = userRepository.findAll().stream()
+                    .filter(u -> u.getRole() == Role.ADMIN)
+                    .filter(User::isEnabled)
+                    .count();
+
+            if (activeAdmins <= 1) {
+                throw new IllegalArgumentException(
+                        "Cannot disable the last active admin");
+            }
+        }
 
         user.setEnabled(false);
         userRepository.save(user);
     }
+
 }
